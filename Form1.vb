@@ -10,6 +10,7 @@ Imports Opc.Ua
 Imports Opc.Ua.Client.Controls
 Imports Opc.Ua.Sample.Controls
 Imports System.Reflection
+Imports Org.BouncyCastle.Crypto.Engines
 
 Public Class Form1
 
@@ -71,7 +72,7 @@ Public Class Form1
 
         If IO.File.Exists(xpifile) Then
             Dim xdoc As XDocument = XDocument.Load(xpifile)
-            Dim data As List(Of XElement) = xdoc.Element("PILinkData").Element("PILinkList").Elements.ToList
+            Dim data As List(Of XElement) = xdoc.Element("OPCLinkData").Element("OPCLinkList").Elements.ToList
             LoadList()
             ReadData()
         End If
@@ -290,6 +291,25 @@ Public Class Form1
                             Next
                         End If
                     End If
+                Case 12
+                    Try
+                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+                        Dim expr As String = Grid1.Rows(e.RowIndex).Cells("expression").Value
+                        Dim econtext As New ExpressionContext
+                        econtext.Imports.AddType(GetType(System.Math))
+                        econtext.Variables.Add("val", item.CurrentValue)
+                        Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
+                        Dim result As Object = exbase.Evaluate
+                        If Double.TryParse(result, New Double) Then
+                            item.ExpressionResult = result
+                            Grid1.Rows(e.RowIndex).Cells("result").Value = result
+                        Else
+                            item.ExpressionResult = Double.NaN
+                            Grid1.Rows(e.RowIndex).Cells("result").Value = Double.NaN
+                        End If
+                    Catch ex As Exception
+                        Grid1.Rows(e.RowIndex).Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
+                    End Try
             End Select
         End If
 
@@ -540,48 +560,49 @@ Public Class Form1
 
     Private Sub ToolStripButton5_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton5.Click
 
-        Dim refdate As Date, delta As TimeSpan
-        If btnRealTime.Checked Then
-            refdate = Date.Now
-        End If
-
         For Each r As DataGridViewRow In Grid1.Rows
 
             If r.Cells("active").Value = True Then
 
+                Dim item = LinkList(r.Cells("id").Value)
+                Dim value As Double
+
+                Try
+                    value = m_session.ReadValue(item.MonitoredVariable.NodeId).Value
+                Catch ex As Exception
+                    fsheet.ShowMessage(String.Format("Error reading OPC Variable '{0}': {1}", item.MonitoredVariable.NodeId.ToString(), ex.Message), IFlowsheet.MessageType.GeneralError)
+                    value = item.FailSafeValue
+                End Try
+
                 Try
 
-                    delta = TimeSpan.Parse(r.Cells("interval").Value)
+                    If value < item.MinimumValue Then value = item.MinimumValue
+                    If value > item.MaximumValue Then value = item.MaximumValue
+
+                    item.CurrentValue = value
 
                     Dim expr As String = r.Cells("expression").Value
 
-                    Dim pivars() = expr.Split(Chr(39))
-
-                    Dim i As Integer, pival As Object
-                    For i = 1 To pivars.Length - 1
-                        If i Mod 2 Then
-                            'pival = RetrievePIExpVal(cbPIServer.SelectedItem, "'" + pivars(i) + "'", refdate.Add(-delta), refdate)
-                            expr = expr.Replace("'" + pivars(i) + "'", pival)
-                        End If
-                    Next
-
                     Dim econtext As New ExpressionContext
                     econtext.Imports.AddType(GetType(System.Math))
+                    econtext.Variables.Add("val", value)
                     Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
 
                     Dim result As Object = exbase.Evaluate
 
                     If Double.TryParse(result, New Double) Then
-                        r.Cells("currentvalue").Value = result
+                        item.ExpressionResult = result
+                        r.Cells("result").Value = result
                     Else
-                        r.Cells("currentvalue").Value = Double.NaN
+                        item.ExpressionResult = Double.NaN
+                        r.Cells("result").Value = Double.NaN
                     End If
 
                     r.Cells("lastupdate").Value = Date.Now.ToString
 
                 Catch ex As Exception
 
-                    r.Cells("currentvalue").Value = ex.Message.ToString
+                    r.Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
 
                 End Try
 
@@ -616,22 +637,7 @@ Public Class Form1
 
                         Dim propunit As String = r.Cells("unit").Value
 
-                        Dim currentvalue As Object = r.Cells("currentvalue").Value
-                        Dim maximumvalue As Double = r.Cells("maximumvalue").Value
-                        Dim minimumvalue As Double = r.Cells("minimumvalue").Value
-                        Dim failsafevalue As Double = r.Cells("failsafevalue").Value
-
-                        If Double.TryParse(currentvalue, New Double) = False Then
-                            propval = failsafevalue
-                        Else
-                            If Double.IsNaN(currentvalue) Or Double.IsInfinity(currentvalue) Then
-                                propval = failsafevalue
-                            Else
-                                propval = currentvalue
-                                If currentvalue > maximumvalue Then propval = maximumvalue
-                                If currentvalue < minimumvalue Then propval = minimumvalue
-                            End If
-                        End If
+                        propval = r.Cells("result").Value
 
                         For Each prop As String In props
                             If fsheet.GetTranslatedString(prop) = selectedprop Then
@@ -642,22 +648,7 @@ Public Class Form1
 
                     Else
 
-                        Dim currentvalue As Object = r.Cells("currentvalue").Value
-                        Dim maximumvalue As Double = r.Cells("maximumvalue").Value
-                        Dim minimumvalue As Double = r.Cells("minimumvalue").Value
-                        Dim failsafevalue As Double = r.Cells("failsafevalue").Value
-
-                        If Double.TryParse(currentvalue, New Double) = False Then
-                            propval = failsafevalue
-                        Else
-                            If Double.IsNaN(currentvalue) Or Double.IsInfinity(currentvalue) Then
-                                propval = failsafevalue
-                            Else
-                                propval = currentvalue
-                                If currentvalue > maximumvalue Then propval = maximumvalue
-                                If currentvalue < minimumvalue Then propval = minimumvalue
-                            End If
-                        End If
+                        propval = r.Cells("result").Value
 
                         fsheet.FormSpreadsheet.SetCellValue(selectedprop, propval)
 
@@ -750,9 +741,8 @@ Public Class Form1
 
             StoreData()
 
-            xdoc.Add(New XElement("PILinkData"))
-            'xdoc.Element("PILinkData").Add(New XElement("PIServer", Me.cbPIServer.SelectedItem.ToString))
-            xdoc.Element("PILinkData").Add(SaveList)
+            xdoc.Add(New XElement("OPCLinkData"))
+            xdoc.Element("OPCLinkData").Add(SaveList)
 
             xdoc.Save(Me.SaveFileDialog1.FileName)
 
@@ -770,9 +760,19 @@ Public Class Form1
 
             Dim ritem = selector.MonItem
 
-            MessageBox.Show(m_session.ReadValue(ritem.NodeId).Value.ToString)
+            Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+
+            item.MonitoredVariable = ritem
+            item.CurrentValue = m_session.ReadValue(ritem.NodeId).Value
+
+            Grid1.Rows(e.RowIndex).Cells("currentvalue").Value = item.CurrentValue.ToString
+            Grid1.Rows(e.RowIndex).Cells("monitoreditem").Value = ritem.DisplayName.ToString() + " [" + ritem.NodeId.ToString() + "]"
 
         End If
+
+    End Sub
+
+    Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
 
     End Sub
 

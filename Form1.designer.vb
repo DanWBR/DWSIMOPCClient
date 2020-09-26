@@ -23,10 +23,10 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -40,9 +40,18 @@ Partial Class Form1
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.btnRealTime = New System.Windows.Forms.ToolStripButton()
         Me.btnAutoUpdate = New System.Windows.Forms.ToolStripButton()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.tsAutoUpdate = New System.Windows.Forms.ToolStripTextBox()
+        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.active = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.itemname = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -56,24 +65,21 @@ Partial Class Form1
         Me.maximumvalue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.failsafevalue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.expression = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.result = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lastupdate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripSeparator3, Me.ToolStripButton5, Me.ToolStripButton8, Me.ToolStripSeparator1, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton7, Me.ToolStripSeparator2, Me.HelpToolStripButton, Me.ToolStripSeparator4, Me.btnRealTime, Me.btnAutoUpdate})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripSeparator3, Me.ToolStripButton5, Me.ToolStripButton8, Me.ToolStripSeparator1, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton7, Me.ToolStripSeparator2, Me.HelpToolStripButton, Me.ToolStripSeparator4, Me.btnAutoUpdate, Me.ToolStripLabel1, Me.tsAutoUpdate, Me.ToolStripLabel2})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(957, 25)
@@ -154,7 +160,7 @@ Partial Class Form1
         Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton7.Name = "ToolStripButton7"
         Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton7.Text = "Autosave"
+        Me.ToolStripButton7.Text = "AutoSave"
         '
         'ToolStripSeparator2
         '
@@ -175,22 +181,8 @@ Partial Class Form1
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
         '
-        'btnRealTime
-        '
-        Me.btnRealTime.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.btnRealTime.Checked = True
-        Me.btnRealTime.CheckOnClick = True
-        Me.btnRealTime.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.btnRealTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnRealTime.Image = CType(resources.GetObject("btnRealTime.Image"), System.Drawing.Image)
-        Me.btnRealTime.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnRealTime.Name = "btnRealTime"
-        Me.btnRealTime.Size = New System.Drawing.Size(62, 22)
-        Me.btnRealTime.Text = "Real Time"
-        '
         'btnAutoUpdate
         '
-        Me.btnAutoUpdate.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.btnAutoUpdate.Checked = True
         Me.btnAutoUpdate.CheckOnClick = True
         Me.btnAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked
@@ -206,14 +198,117 @@ Partial Class Form1
         Me.Grid1.AllowUserToAddRows = False
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.Grid1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.active, Me.itemname, Me.comment, Me.associatedobject, Me.associatedproperty, Me.monitoreditem, Me.selectitem, Me.currentvalue, Me.minimumvalue, Me.maximumvalue, Me.failsafevalue, Me.expression, Me.unit, Me.lastupdate})
+        Me.Grid1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.active, Me.itemname, Me.comment, Me.associatedobject, Me.associatedproperty, Me.monitoreditem, Me.selectitem, Me.currentvalue, Me.minimumvalue, Me.maximumvalue, Me.failsafevalue, Me.expression, Me.result, Me.unit, Me.lastupdate})
         Me.Grid1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.Grid1.Location = New System.Drawing.Point(0, 0)
         Me.Grid1.Name = "Grid1"
         Me.Grid1.RowHeadersWidth = 25
-        Me.Grid1.Size = New System.Drawing.Size(824, 255)
+        Me.Grid1.Size = New System.Drawing.Size(824, 250)
         Me.Grid1.TabIndex = 1
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.DefaultExt = "dwsim"
+        Me.OpenFileDialog1.Filter = "OPC Variable List (*.dwopc)|*.dwopc"
+        Me.OpenFileDialog1.FilterIndex = 6
+        Me.OpenFileDialog1.RestoreDirectory = True
+        Me.OpenFileDialog1.Title = "Load Variable List"
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "dwsim"
+        Me.SaveFileDialog1.Filter = "OPC Variable List (*.dwopc)|*.dwopc"
+        Me.SaveFileDialog1.RestoreDirectory = True
+        Me.SaveFileDialog1.SupportMultiDottedExtensions = True
+        Me.SaveFileDialog1.Title = "Save Variable List"
+        '
+        'EndpointSelectorCTRL
+        '
+        Me.EndpointSelectorCTRL.Location = New System.Drawing.Point(103, 3)
+        Me.EndpointSelectorCTRL.MaximumSize = New System.Drawing.Size(2048, 27)
+        Me.EndpointSelectorCTRL.MinimumSize = New System.Drawing.Size(100, 27)
+        Me.EndpointSelectorCTRL.Name = "EndpointSelectorCTRL"
+        Me.EndpointSelectorCTRL.Padding = New System.Windows.Forms.Padding(1, 0, 0, 0)
+        Me.EndpointSelectorCTRL.SelectedEndpoint = Nothing
+        Me.EndpointSelectorCTRL.Size = New System.Drawing.Size(851, 27)
+        Me.EndpointSelectorCTRL.TabIndex = 4
+        '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 57)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.SessionsCTRL)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.Grid1)
+        Me.SplitContainer1.Size = New System.Drawing.Size(957, 250)
+        Me.SplitContainer1.SplitterDistance = 129
+        Me.SplitContainer1.TabIndex = 5
+        '
+        'SessionsCTRL
+        '
+        Me.SessionsCTRL.AddressSpaceCtrl = Nothing
+        Me.SessionsCTRL.Configuration = Nothing
+        Me.SessionsCTRL.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SessionsCTRL.EnableDragging = False
+        Me.SessionsCTRL.Location = New System.Drawing.Point(0, 0)
+        Me.SessionsCTRL.MessageContext = Nothing
+        Me.SessionsCTRL.Name = "SessionsCTRL"
+        Me.SessionsCTRL.NotificationMessagesCtrl = Nothing
+        Me.SessionsCTRL.PreferredLocales = Nothing
+        Me.SessionsCTRL.ServerStatusCtrl = Nothing
+        Me.SessionsCTRL.Size = New System.Drawing.Size(129, 250)
+        Me.SessionsCTRL.TabIndex = 1
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.EndpointSelectorCTRL, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 25)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(957, 32)
+        Me.TableLayoutPanel1.TabIndex = 6
+        '
+        'Label1
+        '
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label1.Location = New System.Drawing.Point(3, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(94, 32)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "Connect to Server"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 22)
+        Me.ToolStripLabel1.Text = "Interval"
+        '
+        'tsAutoUpdate
+        '
+        Me.tsAutoUpdate.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.tsAutoUpdate.Name = "tsAutoUpdate"
+        Me.tsAutoUpdate.Size = New System.Drawing.Size(40, 25)
+        Me.tsAutoUpdate.Text = "60"
+        '
+        'ToolStripLabel2
+        '
+        Me.ToolStripLabel2.Name = "ToolStripLabel2"
+        Me.ToolStripLabel2.Size = New System.Drawing.Size(12, 22)
+        Me.ToolStripLabel2.Text = "s"
         '
         'id
         '
@@ -281,13 +376,14 @@ Partial Class Form1
         Me.selectitem.HeaderText = "Select"
         Me.selectitem.Name = "selectitem"
         Me.selectitem.Text = "..."
+        Me.selectitem.UseColumnTextForButtonValue = True
         Me.selectitem.Width = 43
         '
         'currentvalue
         '
         Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle5
         Me.currentvalue.FillWeight = 54.21845!
         Me.currentvalue.HeaderText = "Current Val"
         Me.currentvalue.Name = "currentvalue"
@@ -297,8 +393,8 @@ Partial Class Form1
         'minimumvalue
         '
         Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle6
         Me.minimumvalue.FillWeight = 54.21845!
         Me.minimumvalue.HeaderText = "Min Val"
         Me.minimumvalue.Name = "minimumvalue"
@@ -307,8 +403,8 @@ Partial Class Form1
         'maximumvalue
         '
         Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle7
         Me.maximumvalue.FillWeight = 54.21845!
         Me.maximumvalue.HeaderText = "Max Val"
         Me.maximumvalue.Name = "maximumvalue"
@@ -317,8 +413,8 @@ Partial Class Form1
         'failsafevalue
         '
         Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle8
         Me.failsafevalue.FillWeight = 54.21845!
         Me.failsafevalue.HeaderText = "Val on Error"
         Me.failsafevalue.Name = "failsafevalue"
@@ -329,6 +425,13 @@ Partial Class Form1
         Me.expression.HeaderText = "Expression"
         Me.expression.Name = "expression"
         Me.expression.Width = 83
+        '
+        'result
+        '
+        Me.result.HeaderText = "Result"
+        Me.result.Name = "result"
+        Me.result.ReadOnly = True
+        Me.result.Width = 62
         '
         'unit
         '
@@ -348,80 +451,20 @@ Partial Class Form1
         Me.lastupdate.ReadOnly = True
         Me.lastupdate.Width = 90
         '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.DefaultExt = "dwsim"
-        Me.OpenFileDialog1.Filter = "Arquivo de Lista de Variáveis do PI (*.dwxpi)|*.dwxpi"
-        Me.OpenFileDialog1.FilterIndex = 6
-        Me.OpenFileDialog1.RestoreDirectory = True
-        Me.OpenFileDialog1.Title = "Carregar lista de variáveis existente"
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "dwsim"
-        Me.SaveFileDialog1.Filter = "Arquivo de Lista de Variáveis do PI (*.dwxpi)|*.dwxpi"
-        Me.SaveFileDialog1.RestoreDirectory = True
-        Me.SaveFileDialog1.SupportMultiDottedExtensions = True
-        Me.SaveFileDialog1.Title = "Salvar lista de variáveis existente"
-        '
-        'EndpointSelectorCTRL
-        '
-        Me.EndpointSelectorCTRL.Dock = System.Windows.Forms.DockStyle.Top
-        Me.EndpointSelectorCTRL.Location = New System.Drawing.Point(0, 25)
-        Me.EndpointSelectorCTRL.MaximumSize = New System.Drawing.Size(2048, 27)
-        Me.EndpointSelectorCTRL.MinimumSize = New System.Drawing.Size(100, 27)
-        Me.EndpointSelectorCTRL.Name = "EndpointSelectorCTRL"
-        Me.EndpointSelectorCTRL.Padding = New System.Windows.Forms.Padding(1, 0, 0, 0)
-        Me.EndpointSelectorCTRL.SelectedEndpoint = Nothing
-        Me.EndpointSelectorCTRL.Size = New System.Drawing.Size(957, 27)
-        Me.EndpointSelectorCTRL.TabIndex = 4
-        '
-        'SplitContainer1
-        '
-        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.Location = New System.Drawing.Point(0, 52)
-        Me.SplitContainer1.Name = "SplitContainer1"
-        '
-        'SplitContainer1.Panel1
-        '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.SessionsCTRL)
-        '
-        'SplitContainer1.Panel2
-        '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.Grid1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(957, 255)
-        Me.SplitContainer1.SplitterDistance = 129
-        Me.SplitContainer1.TabIndex = 5
-        '
-        'SessionsCTRL
-        '
-        Me.SessionsCTRL.AddressSpaceCtrl = Nothing
-        Me.SessionsCTRL.Configuration = Nothing
-        Me.SessionsCTRL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SessionsCTRL.EnableDragging = False
-        Me.SessionsCTRL.Location = New System.Drawing.Point(0, 0)
-        Me.SessionsCTRL.MessageContext = Nothing
-        Me.SessionsCTRL.Name = "SessionsCTRL"
-        Me.SessionsCTRL.NotificationMessagesCtrl = Nothing
-        Me.SessionsCTRL.PreferredLocales = Nothing
-        Me.SessionsCTRL.ServerStatusCtrl = Nothing
-        Me.SessionsCTRL.Size = New System.Drawing.Size(129, 255)
-        Me.SessionsCTRL.TabIndex = 1
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(957, 307)
         Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.EndpointSelectorCTRL)
+        Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "Form1"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
-        Me.TabText = "Conexão com o PI"
-        Me.Text = "Conexão com PI"
+        Me.TabText = "DWSIM OPC Client Plugin"
+        Me.Text = "DWSIM OPC Client Plugin"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -429,6 +472,7 @@ Partial Class Form1
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -445,13 +489,19 @@ Partial Class Form1
     Friend WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents btnRealTime As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripButton7 As System.Windows.Forms.ToolStripButton
     Friend WithEvents btnAutoUpdate As System.Windows.Forms.ToolStripButton
     Public WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Public WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents ToolStripButton8 As System.Windows.Forms.ToolStripButton
     Private WithEvents EndpointSelectorCTRL As Opc.Ua.Client.Controls.EndpointSelectorCtrl
+    Friend WithEvents SplitContainer1 As Windows.Forms.SplitContainer
+    Protected WithEvents SessionsCTRL As Opc.Ua.Sample.Controls.SessionTreeCtrl
+    Friend WithEvents TableLayoutPanel1 As Windows.Forms.TableLayoutPanel
+    Friend WithEvents Label1 As Windows.Forms.Label
+    Friend WithEvents ToolStripLabel1 As Windows.Forms.ToolStripLabel
+    Friend WithEvents tsAutoUpdate As Windows.Forms.ToolStripTextBox
+    Friend WithEvents ToolStripLabel2 As Windows.Forms.ToolStripLabel
     Friend WithEvents id As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents active As Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents itemname As Windows.Forms.DataGridViewTextBoxColumn
@@ -465,8 +515,7 @@ Partial Class Form1
     Friend WithEvents maximumvalue As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents failsafevalue As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents expression As Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents result As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents unit As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents lastupdate As Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents SplitContainer1 As Windows.Forms.SplitContainer
-    Protected WithEvents SessionsCTRL As Opc.Ua.Sample.Controls.SessionTreeCtrl
 End Class
