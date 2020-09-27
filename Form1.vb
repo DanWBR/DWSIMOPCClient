@@ -867,6 +867,7 @@ Public Class Form1
         If UpdateTimer IsNot Nothing Then
             UpdateTimer.Enabled = btnAutoUpdate.Checked
         End If
+        btnAutoCalculate.Enabled = btnAutoUpdate.Checked
     End Sub
 
     Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
@@ -880,6 +881,8 @@ Public Class Form1
         UpdateValues()
 
         eventhandler(Me, New EventArgs, Nothing)
+
+        If btnAutoCalculate.Checked Then fsheet.RequestCalculation()
 
     End Sub
 

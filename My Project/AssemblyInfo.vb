@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DWSIM OPC Client Plugin")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("DWSIM OPC UA Client Plugin")>
+<Assembly: AssemblyDescription("Plugin for Data Acquisition from OPC UA Servers")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("DWSIMOPCClient")>
 <Assembly: AssemblyCopyright("Copyright © 2020 Daniel Medeiros")>

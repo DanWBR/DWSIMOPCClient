@@ -44,6 +44,7 @@ Partial Class Form1
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.tsAutoUpdate = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
+        Me.btnAutoCalculate = New System.Windows.Forms.ToolStripButton()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.active = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -65,9 +66,9 @@ Partial Class Form1
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,7 +80,7 @@ Partial Class Form1
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripSeparator3, Me.ToolStripButton5, Me.ToolStripButton8, Me.ToolStripSeparator1, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton7, Me.ToolStripSeparator2, Me.HelpToolStripButton, Me.ToolStripSeparator4, Me.btnAutoUpdate, Me.ToolStripLabel1, Me.tsAutoUpdate, Me.ToolStripLabel2})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripSeparator3, Me.ToolStripButton5, Me.ToolStripButton8, Me.ToolStripSeparator1, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton7, Me.ToolStripSeparator2, Me.HelpToolStripButton, Me.ToolStripSeparator4, Me.btnAutoUpdate, Me.ToolStripLabel1, Me.tsAutoUpdate, Me.ToolStripLabel2, Me.btnAutoCalculate})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(957, 25)
@@ -212,6 +213,19 @@ Partial Class Form1
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
         Me.ToolStripLabel2.Size = New System.Drawing.Size(12, 22)
         Me.ToolStripLabel2.Text = "s"
+        '
+        'btnAutoCalculate
+        '
+        Me.btnAutoCalculate.Checked = True
+        Me.btnAutoCalculate.CheckOnClick = True
+        Me.btnAutoCalculate.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.btnAutoCalculate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnAutoCalculate.Image = CType(resources.GetObject("btnAutoCalculate.Image"), System.Drawing.Image)
+        Me.btnAutoCalculate.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnAutoCalculate.Name = "btnAutoCalculate"
+        Me.btnAutoCalculate.Size = New System.Drawing.Size(86, 22)
+        Me.btnAutoCalculate.Text = "AutoCalculate"
+        Me.btnAutoCalculate.ToolTipText = "AutoCalculate"
         '
         'Grid1
         '
@@ -413,6 +427,21 @@ Partial Class Form1
         Me.SplitContainer1.SplitterDistance = 129
         Me.SplitContainer1.TabIndex = 5
         '
+        'SessionsCTRL
+        '
+        Me.SessionsCTRL.AddressSpaceCtrl = Nothing
+        Me.SessionsCTRL.Configuration = Nothing
+        Me.SessionsCTRL.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SessionsCTRL.EnableDragging = False
+        Me.SessionsCTRL.Location = New System.Drawing.Point(0, 0)
+        Me.SessionsCTRL.MessageContext = Nothing
+        Me.SessionsCTRL.Name = "SessionsCTRL"
+        Me.SessionsCTRL.NotificationMessagesCtrl = Nothing
+        Me.SessionsCTRL.PreferredLocales = Nothing
+        Me.SessionsCTRL.ServerStatusCtrl = Nothing
+        Me.SessionsCTRL.Size = New System.Drawing.Size(129, 250)
+        Me.SessionsCTRL.TabIndex = 1
+        '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.ColumnCount = 2
@@ -438,21 +467,6 @@ Partial Class Form1
         Me.Label1.Text = "Connect to Server"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'SessionsCTRL
-        '
-        Me.SessionsCTRL.AddressSpaceCtrl = Nothing
-        Me.SessionsCTRL.Configuration = Nothing
-        Me.SessionsCTRL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SessionsCTRL.EnableDragging = False
-        Me.SessionsCTRL.Location = New System.Drawing.Point(0, 0)
-        Me.SessionsCTRL.MessageContext = Nothing
-        Me.SessionsCTRL.Name = "SessionsCTRL"
-        Me.SessionsCTRL.NotificationMessagesCtrl = Nothing
-        Me.SessionsCTRL.PreferredLocales = Nothing
-        Me.SessionsCTRL.ServerStatusCtrl = Nothing
-        Me.SessionsCTRL.Size = New System.Drawing.Size(129, 250)
-        Me.SessionsCTRL.TabIndex = 1
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -465,8 +479,8 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
         Me.ShowIcon = False
-        Me.TabText = "DWSIM OPC Client Plugin"
-        Me.Text = "DWSIM OPC Client Plugin"
+        Me.TabText = "DWSIM OPC UA Client Plugin"
+        Me.Text = "DWSIM OPC UA Client Plugin"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -520,4 +534,5 @@ Partial Class Form1
     Friend WithEvents result As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents unit As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents lastupdate As Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents btnAutoCalculate As Windows.Forms.ToolStripButton
 End Class
