@@ -11,6 +11,7 @@ Imports Opc.Ua.Client.Controls
 Imports Opc.Ua.Sample.Controls
 Imports System.Reflection
 Imports Org.BouncyCastle.Crypto.Engines
+Imports System.ComponentModel
 
 Public Class Form1
 
@@ -880,6 +881,10 @@ Public Class Form1
 
         eventhandler(Me, New EventArgs, Nothing)
 
+    End Sub
+
+    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Disconnect()
     End Sub
 
 End Class

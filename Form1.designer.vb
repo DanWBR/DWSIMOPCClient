@@ -23,10 +23,10 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -65,9 +65,9 @@ Partial Class Form1
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -299,8 +299,8 @@ Partial Class Form1
         'currentvalue
         '
         Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle1
         Me.currentvalue.FillWeight = 54.21845!
         Me.currentvalue.HeaderText = "Current Val"
         Me.currentvalue.Name = "currentvalue"
@@ -310,8 +310,8 @@ Partial Class Form1
         'minimumvalue
         '
         Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle2
         Me.minimumvalue.FillWeight = 54.21845!
         Me.minimumvalue.HeaderText = "Min Val"
         Me.minimumvalue.Name = "minimumvalue"
@@ -320,8 +320,8 @@ Partial Class Form1
         'maximumvalue
         '
         Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle3
         Me.maximumvalue.FillWeight = 54.21845!
         Me.maximumvalue.HeaderText = "Max Val"
         Me.maximumvalue.Name = "maximumvalue"
@@ -330,8 +330,8 @@ Partial Class Form1
         'failsafevalue
         '
         Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle4
         Me.failsafevalue.FillWeight = 54.21845!
         Me.failsafevalue.HeaderText = "Val on Error"
         Me.failsafevalue.Name = "failsafevalue"
@@ -413,21 +413,6 @@ Partial Class Form1
         Me.SplitContainer1.SplitterDistance = 129
         Me.SplitContainer1.TabIndex = 5
         '
-        'SessionsCTRL
-        '
-        Me.SessionsCTRL.AddressSpaceCtrl = Nothing
-        Me.SessionsCTRL.Configuration = Nothing
-        Me.SessionsCTRL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SessionsCTRL.EnableDragging = False
-        Me.SessionsCTRL.Location = New System.Drawing.Point(0, 0)
-        Me.SessionsCTRL.MessageContext = Nothing
-        Me.SessionsCTRL.Name = "SessionsCTRL"
-        Me.SessionsCTRL.NotificationMessagesCtrl = Nothing
-        Me.SessionsCTRL.PreferredLocales = Nothing
-        Me.SessionsCTRL.ServerStatusCtrl = Nothing
-        Me.SessionsCTRL.Size = New System.Drawing.Size(129, 250)
-        Me.SessionsCTRL.TabIndex = 1
-        '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.ColumnCount = 2
@@ -452,6 +437,21 @@ Partial Class Form1
         Me.Label1.TabIndex = 5
         Me.Label1.Text = "Connect to Server"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'SessionsCTRL
+        '
+        Me.SessionsCTRL.AddressSpaceCtrl = Nothing
+        Me.SessionsCTRL.Configuration = Nothing
+        Me.SessionsCTRL.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SessionsCTRL.EnableDragging = False
+        Me.SessionsCTRL.Location = New System.Drawing.Point(0, 0)
+        Me.SessionsCTRL.MessageContext = Nothing
+        Me.SessionsCTRL.Name = "SessionsCTRL"
+        Me.SessionsCTRL.NotificationMessagesCtrl = Nothing
+        Me.SessionsCTRL.PreferredLocales = Nothing
+        Me.SessionsCTRL.ServerStatusCtrl = Nothing
+        Me.SessionsCTRL.Size = New System.Drawing.Size(129, 250)
+        Me.SessionsCTRL.TabIndex = 1
         '
         'Form1
         '
