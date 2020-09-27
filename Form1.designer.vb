@@ -23,10 +23,10 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -298,8 +298,8 @@ Partial Class Form1
         'currentvalue
         '
         Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle13
         Me.currentvalue.FillWeight = 54.21845!
         Me.currentvalue.HeaderText = "Current Val"
         Me.currentvalue.Name = "currentvalue"
@@ -309,8 +309,8 @@ Partial Class Form1
         'minimumvalue
         '
         Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle14
         Me.minimumvalue.FillWeight = 54.21845!
         Me.minimumvalue.HeaderText = "Min Val"
         Me.minimumvalue.Name = "minimumvalue"
@@ -319,8 +319,8 @@ Partial Class Form1
         'maximumvalue
         '
         Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle15
         Me.maximumvalue.FillWeight = 54.21845!
         Me.maximumvalue.HeaderText = "Max Val"
         Me.maximumvalue.Name = "maximumvalue"
@@ -329,8 +329,8 @@ Partial Class Form1
         'failsafevalue
         '
         Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle16
         Me.failsafevalue.FillWeight = 54.21845!
         Me.failsafevalue.HeaderText = "Val on Error"
         Me.failsafevalue.Name = "failsafevalue"
@@ -385,6 +385,7 @@ Partial Class Form1
         '
         'EndpointSelectorCTRL
         '
+        Me.EndpointSelectorCTRL.Dock = System.Windows.Forms.DockStyle.Fill
         Me.EndpointSelectorCTRL.Location = New System.Drawing.Point(103, 3)
         Me.EndpointSelectorCTRL.MaximumSize = New System.Drawing.Size(2048, 27)
         Me.EndpointSelectorCTRL.MinimumSize = New System.Drawing.Size(100, 27)
@@ -461,7 +462,7 @@ Partial Class Form1
         Me.Controls.Add(Me.ToolStrip1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "Form1"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
         Me.ShowIcon = False
         Me.TabText = "DWSIM OPC Client Plugin"
         Me.Text = "DWSIM OPC Client Plugin"

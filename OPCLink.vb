@@ -7,8 +7,8 @@
     Public Property Name As String = ""
     Public Property MonitoredVariable As ReferenceDescription
     Public Property Expression As String = "val"
-    Public Property ExpressionResult As Double = 0.0
-    Public Property MaximumValue As Double = 0.0#
+    Public Property ExpressionResult As Double = -1000.0
+    Public Property MaximumValue As Double = 1000.0
     Public Property MinimumValue As Double = 0.0#
     Public Property FailSafeValue As Double = 0.0#
     Public Property ObjectID As String = ""

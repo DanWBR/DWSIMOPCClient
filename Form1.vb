@@ -247,7 +247,7 @@ Public Class Form1
         Me.Grid1.Rows.Add()
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).HeaderCell.Value = Me.Grid1.Rows.Count
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("id").Value = id
-        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("name").Value = newitem.Name
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("itemname").Value = newitem.Name
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("comment").Value = newitem.Comment
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("active").Value = True
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("itemname").Value = "OPCLink" & Me.Grid1.Rows.Count
@@ -305,6 +305,24 @@ Public Class Form1
                             Next
                         End If
                     End If
+                Case 9
+                    Try
+                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+                        item.MinimumValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+                    Catch ex As Exception
+                    End Try
+                Case 10
+                    Try
+                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+                        item.MaximumValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+                    Catch ex As Exception
+                    End Try
+                Case 11
+                    Try
+                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+                        item.FailSafeValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+                    Catch ex As Exception
+                    End Try
                 Case 12
                     Try
                         Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
@@ -589,8 +607,10 @@ Public Class Form1
 
                 Try
                     value = m_session.ReadValue(item.MonitoredVariable.NodeId).Value
+                    r.Cells("currentvalue").Value = value
                 Catch ex As Exception
                     fsheet.ShowMessage(String.Format("Error reading OPC Variable '{0}': {1}", item.MonitoredVariable.NodeId.ToString(), ex.Message), IFlowsheet.MessageType.GeneralError)
+                    r.Cells("currentvalue").Value = Double.NaN
                     value = item.FailSafeValue
                 End Try
 
@@ -666,11 +686,15 @@ Public Class Form1
                             End If
                         Next
 
+                        fsheet.UpdateOpenEditForms()
+
                     Else
 
                         propval = r.Cells("result").Value
 
                         fsheet.FormSpreadsheet.SetCellValue(selectedprop, propval)
+
+                        fsheet.UpdateSpreadsheet(Nothing)
 
                     End If
 
@@ -809,8 +833,10 @@ Public Class Form1
 
     Private Sub tsAutoUpdate_TextChanged(sender As Object, e As EventArgs) Handles tsAutoUpdate.TextChanged
 
-        If Double.TryParse(tsAutoUpdate.Text, New Double) Then
-            UpdateTimer.Interval = Convert.ToDouble(tsAutoUpdate.Text) * 1000
+        If UpdateTimer IsNot Nothing Then
+            If Double.TryParse(tsAutoUpdate.Text, New Double) Then
+                UpdateTimer.Interval = Convert.ToDouble(tsAutoUpdate.Text) * 1000
+            End If
         End If
 
     End Sub
@@ -829,6 +855,10 @@ Public Class Form1
 
     End Sub
 
+    Private Sub btnAutoUpdate_CheckedChanged(sender As Object, e As EventArgs) Handles btnAutoUpdate.CheckedChanged
+        UpdateTimer.Enabled = btnAutoUpdate.Checked
+    End Sub
+
     Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
 
         eventhandler(Me, New EventArgs, Nothing)
@@ -837,11 +867,9 @@ Public Class Form1
 
     Private Sub UpdateTimer_Tick(sender As Object, e As EventArgs) Handles UpdateTimer.Tick
 
-        If InvokeRequired Then
-            Invoke(Sub() UpdateValues())
-        Else
-            UpdateValues()
-        End If
+        UpdateValues()
+
+        eventhandler(Me, New EventArgs, Nothing)
 
     End Sub
 
