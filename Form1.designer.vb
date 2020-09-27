@@ -23,10 +23,10 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -205,6 +205,7 @@ Partial Class Form1
         Me.tsAutoUpdate.Name = "tsAutoUpdate"
         Me.tsAutoUpdate.Size = New System.Drawing.Size(40, 25)
         Me.tsAutoUpdate.Text = "60"
+        Me.tsAutoUpdate.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'ToolStripLabel2
         '
@@ -298,8 +299,8 @@ Partial Class Form1
         'currentvalue
         '
         Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle17
         Me.currentvalue.FillWeight = 54.21845!
         Me.currentvalue.HeaderText = "Current Val"
         Me.currentvalue.Name = "currentvalue"
@@ -309,8 +310,8 @@ Partial Class Form1
         'minimumvalue
         '
         Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle18
         Me.minimumvalue.FillWeight = 54.21845!
         Me.minimumvalue.HeaderText = "Min Val"
         Me.minimumvalue.Name = "minimumvalue"
@@ -319,8 +320,8 @@ Partial Class Form1
         'maximumvalue
         '
         Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle19
         Me.maximumvalue.FillWeight = 54.21845!
         Me.maximumvalue.HeaderText = "Max Val"
         Me.maximumvalue.Name = "maximumvalue"
@@ -329,8 +330,8 @@ Partial Class Form1
         'failsafevalue
         '
         Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle20
         Me.failsafevalue.FillWeight = 54.21845!
         Me.failsafevalue.HeaderText = "Val on Error"
         Me.failsafevalue.Name = "failsafevalue"
