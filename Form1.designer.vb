@@ -23,10 +23,10 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -193,6 +193,7 @@ Partial Class Form1
         Me.btnAutoUpdate.Name = "btnAutoUpdate"
         Me.btnAutoUpdate.Size = New System.Drawing.Size(75, 22)
         Me.btnAutoUpdate.Text = "AutoUpdate"
+        Me.btnAutoUpdate.ToolTipText = "Auto update variable values from server and write them to the flowsheet. "
         '
         'ToolStripLabel1
         '
@@ -204,7 +205,7 @@ Partial Class Form1
         '
         Me.tsAutoUpdate.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.tsAutoUpdate.Name = "tsAutoUpdate"
-        Me.tsAutoUpdate.Size = New System.Drawing.Size(40, 25)
+        Me.tsAutoUpdate.Size = New System.Drawing.Size(30, 25)
         Me.tsAutoUpdate.Text = "60"
         Me.tsAutoUpdate.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -225,7 +226,7 @@ Partial Class Form1
         Me.btnAutoCalculate.Name = "btnAutoCalculate"
         Me.btnAutoCalculate.Size = New System.Drawing.Size(86, 22)
         Me.btnAutoCalculate.Text = "AutoCalculate"
-        Me.btnAutoCalculate.ToolTipText = "AutoCalculate"
+        Me.btnAutoCalculate.ToolTipText = "Requests a Flowsheet Calculation after a successful update cycle."
         '
         'Grid1
         '
@@ -313,8 +314,8 @@ Partial Class Form1
         'currentvalue
         '
         Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle9
         Me.currentvalue.FillWeight = 54.21845!
         Me.currentvalue.HeaderText = "Current Val"
         Me.currentvalue.Name = "currentvalue"
@@ -324,8 +325,8 @@ Partial Class Form1
         'minimumvalue
         '
         Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle10
         Me.minimumvalue.FillWeight = 54.21845!
         Me.minimumvalue.HeaderText = "Min Val"
         Me.minimumvalue.Name = "minimumvalue"
@@ -334,8 +335,8 @@ Partial Class Form1
         'maximumvalue
         '
         Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle11
         Me.maximumvalue.FillWeight = 54.21845!
         Me.maximumvalue.HeaderText = "Max Val"
         Me.maximumvalue.Name = "maximumvalue"
@@ -344,8 +345,8 @@ Partial Class Form1
         'failsafevalue
         '
         Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle12
         Me.failsafevalue.FillWeight = 54.21845!
         Me.failsafevalue.HeaderText = "Val on Error"
         Me.failsafevalue.Name = "failsafevalue"
