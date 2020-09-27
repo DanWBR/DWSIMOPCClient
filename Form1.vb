@@ -74,11 +74,11 @@ Public Class Form1
         Me.Grid1.Columns("associatedobject").CellTemplate = cbc2
         Me.Grid1.Columns("associatedproperty").CellTemplate = cbc3
 
-        Dim xpifile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwopc"
+        Dim opcfile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwopc"
 
-        If IO.File.Exists(xpifile) Then
-            Dim jsonstring = IO.File.ReadAllText(Me.OpenFileDialog1.FileName)
-            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonstring)
+        If IO.File.Exists(opcfile) Then
+            Dim jsonstring = IO.File.ReadAllText(opcfile)
+            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, OPCLink))(jsonstring)
             ReadData()
         End If
 
