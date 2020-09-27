@@ -19,6 +19,8 @@ Public Class Form1
     'flowsheet reference
     Public fsheet As IFlowsheet
 
+    Private WithEvents UpdateTimer As Timer
+
     Public LinkList As Dictionary(Of String, OPCLink)
 
     Public cbc2, cbc3, cbc4 As DataGridViewComboBoxCell
@@ -68,12 +70,11 @@ Public Class Form1
         Me.Grid1.Columns("associatedobject").CellTemplate = cbc2
         Me.Grid1.Columns("associatedproperty").CellTemplate = cbc3
 
-        Dim xpifile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwxpi"
+        Dim xpifile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwopc"
 
         If IO.File.Exists(xpifile) Then
-            Dim xdoc As XDocument = XDocument.Load(xpifile)
-            Dim data As List(Of XElement) = xdoc.Element("OPCLinkData").Element("OPCLinkList").Elements.ToList
-            LoadList()
+            Dim jsonstring = IO.File.ReadAllText(Me.OpenFileDialog1.FileName)
+            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonstring)
             ReadData()
         End If
 
@@ -113,9 +114,13 @@ Public Class Form1
         'initialize control state.
         Disconnect()
 
+        UpdateTimer = New Timer With {.Enabled = True, .Interval = 60000}
+        UpdateTimer.Start()
+
     End Sub
 
     Private Sub CertificateValidator_CertificateValidation(ByVal validator As CertificateValidator, ByVal e As CertificateValidationEventArgs)
+
         If InvokeRequired Then
             Invoke(Sub(v0, e0) CertificateValidator_CertificateValidation(v0, e0), New Object() {validator, e})
             Return
@@ -237,13 +242,22 @@ Public Class Form1
 
         Dim id As String = Guid.NewGuid.ToString
 
+        Dim newitem As New OPCLink() With {.ID = id, .Name = "OPCLink" & Me.Grid1.Rows.Count, .Comment = "ItemDescription"}
+
         Me.Grid1.Rows.Add()
-        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).HeaderCell.Value = Me.Grid1.Rows.Count.ToString
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).HeaderCell.Value = Me.Grid1.Rows.Count
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("id").Value = id
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("name").Value = newitem.Name
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("comment").Value = newitem.Comment
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("active").Value = True
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("itemname").Value = "OPCLink" & Me.Grid1.Rows.Count
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("expression").Value = newitem.Expression
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("minimumvalue").Value = newitem.MinimumValue
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("maximumvalue").Value = newitem.MaximumValue
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("currentvalue").Value = newitem.MaximumValue
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("failsafevalue").Value = newitem.FailSafeValue
 
-        LinkList.Add(id, New OPCLink() With {.ID = id, .Name = "OPCLink" & Me.Grid1.Rows.Count})
+        LinkList.Add(id, newitem)
 
     End Sub
 
@@ -560,6 +574,12 @@ Public Class Form1
 
     Private Sub ToolStripButton5_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton5.Click
 
+        UpdateValues()
+
+    End Sub
+
+    Sub UpdateValues()
+
         For Each r As DataGridViewRow In Grid1.Rows
 
             If r.Cells("active").Value = True Then
@@ -701,50 +721,39 @@ Public Class Form1
         For Each p As OPCLink In LinkList.Values
 
             Try
-                Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "",
-                                             "", p.Expression, p.CurrentValue,
-                                             p.MinimumValue, p.MaximumValue, p.FailSafeValue, "", p.LastUpdate})
+                If p.MonitoredVariable IsNot Nothing Then
+                    Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "", "",
+                                             p.MonitoredVariable.DisplayName.ToString() + " [" + p.MonitoredVariable.NodeId.ToString() + "]",
+                                             "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
+                                             p.Expression, p.ExpressionResult, p.ExpressionUnits, p.LastUpdate})
+                Else
+                    Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "", "",
+                                             "",
+                                             "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
+                                             p.Expression, p.ExpressionResult, p.ExpressionUnits, p.LastUpdate})
+                End If
                 If p.ObjectID = "Spreadsheet" Then
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedobject").Value = "Spreadsheet"
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedproperty").Value = p.PropertyID
                 Else
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedobject").Value = fsheet.SimulationObjects(p.ObjectID).GraphicObject.Tag
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedproperty").Value = ReturnPropertyName(p.ObjectID, p.PropertyID)
-                    Grid1.Rows(Grid1.Rows.Count - 1).Cells("unit").Value = p.ExpressionUnits
                 End If
             Catch ex As Exception
-                fsheet.ShowMessage("Erro: " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+                fsheet.ShowMessage("Error: " & ex.ToString, IFlowsheet.MessageType.GeneralError)
             End Try
 
         Next
 
     End Sub
 
-    Sub LoadList()
-
-        LinkList.Clear()
-
-    End Sub
-
-    Function SaveList()
-
-
-    End Function
-
-
     Private Sub ToolStripButton2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton2.Click
 
         If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
 
-            Dim xdoc As New XDocument()
-            Dim ci As CultureInfo = CultureInfo.InvariantCulture
+            Dim jsonstring = Newtonsoft.Json.JsonConvert.SerializeObject(LinkList, Newtonsoft.Json.Formatting.Indented)
 
-            StoreData()
-
-            xdoc.Add(New XElement("OPCLinkData"))
-            xdoc.Element("OPCLinkData").Add(SaveList)
-
-            xdoc.Save(Me.SaveFileDialog1.FileName)
+            IO.File.WriteAllText(SaveFileDialog1.FileName, jsonstring)
 
         End If
 
@@ -763,10 +772,32 @@ Public Class Form1
             Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
 
             item.MonitoredVariable = ritem
+            item.PreviousValue = item.CurrentValue
             item.CurrentValue = m_session.ReadValue(ritem.NodeId).Value
+            item.LastUpdate = Date.Now
+
+            Dim expr As String = Grid1.Rows(e.RowIndex).Cells("expression").Value
+
+            Dim econtext As New ExpressionContext
+            econtext.Imports.AddType(GetType(System.Math))
+            econtext.Variables.Add("val", item.CurrentValue)
+            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
+
+            Dim result As Object = exbase.Evaluate
+
+            If Double.TryParse(result, New Double) Then
+                item.ExpressionResult = result
+                Grid1.Rows(e.RowIndex).Cells("result").Value = result
+            Else
+                item.ExpressionResult = Double.NaN
+                Grid1.Rows(e.RowIndex).Cells("result").Value = Double.NaN
+            End If
+
+            Grid1.Rows(e.RowIndex).Cells("lastupdate").Value = Date.Now.ToString
 
             Grid1.Rows(e.RowIndex).Cells("currentvalue").Value = item.CurrentValue.ToString
             Grid1.Rows(e.RowIndex).Cells("monitoreditem").Value = ritem.DisplayName.ToString() + " [" + ritem.NodeId.ToString() + "]"
+            Grid1.Rows(e.RowIndex).Cells("lastupdate").Value = Date.Now.ToString
 
         End If
 
@@ -776,13 +807,21 @@ Public Class Form1
 
     End Sub
 
+    Private Sub tsAutoUpdate_TextChanged(sender As Object, e As EventArgs) Handles tsAutoUpdate.TextChanged
+
+        If Double.TryParse(tsAutoUpdate.Text, New Double) Then
+            UpdateTimer.Interval = Convert.ToDouble(tsAutoUpdate.Text) * 1000
+        End If
+
+    End Sub
+
     Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
 
         If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
 
-            Dim xdoc As XDocument = XDocument.Load(Me.OpenFileDialog1.FileName)
+            Dim jsonstring = IO.File.ReadAllText(Me.OpenFileDialog1.FileName)
 
-            LoadList()
+            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonstring)
 
             ReadData()
 
@@ -793,6 +832,16 @@ Public Class Form1
     Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
 
         eventhandler(Me, New EventArgs, Nothing)
+
+    End Sub
+
+    Private Sub UpdateTimer_Tick(sender As Object, e As EventArgs) Handles UpdateTimer.Tick
+
+        If InvokeRequired Then
+            Invoke(Sub() UpdateValues())
+        Else
+            UpdateValues()
+        End If
 
     End Sub
 

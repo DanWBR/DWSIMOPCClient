@@ -23,10 +23,10 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -41,17 +41,10 @@ Partial Class Form1
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.btnAutoUpdate = New System.Windows.Forms.ToolStripButton()
-        Me.Grid1 = New System.Windows.Forms.DataGridView()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.tsAutoUpdate = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
+        Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.active = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.itemname = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -68,6 +61,13 @@ Partial Class Form1
         Me.result = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lastupdate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -193,6 +193,25 @@ Partial Class Form1
         Me.btnAutoUpdate.Size = New System.Drawing.Size(75, 22)
         Me.btnAutoUpdate.Text = "AutoUpdate"
         '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 22)
+        Me.ToolStripLabel1.Text = "Interval"
+        '
+        'tsAutoUpdate
+        '
+        Me.tsAutoUpdate.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.tsAutoUpdate.Name = "tsAutoUpdate"
+        Me.tsAutoUpdate.Size = New System.Drawing.Size(40, 25)
+        Me.tsAutoUpdate.Text = "60"
+        '
+        'ToolStripLabel2
+        '
+        Me.ToolStripLabel2.Name = "ToolStripLabel2"
+        Me.ToolStripLabel2.Size = New System.Drawing.Size(12, 22)
+        Me.ToolStripLabel2.Text = "s"
+        '
         'Grid1
         '
         Me.Grid1.AllowUserToAddRows = False
@@ -206,6 +225,147 @@ Partial Class Form1
         Me.Grid1.RowHeadersWidth = 25
         Me.Grid1.Size = New System.Drawing.Size(824, 250)
         Me.Grid1.TabIndex = 1
+        '
+        'id
+        '
+        Me.id.HeaderText = "ID"
+        Me.id.MinimumWidth = 20
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        Me.id.Width = 43
+        '
+        'active
+        '
+        Me.active.FalseValue = "False"
+        Me.active.FillWeight = 15.0!
+        Me.active.HeaderText = ""
+        Me.active.MinimumWidth = 20
+        Me.active.Name = "active"
+        Me.active.TrueValue = "True"
+        Me.active.Width = 20
+        '
+        'itemname
+        '
+        Me.itemname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.itemname.FillWeight = 54.21845!
+        Me.itemname.HeaderText = "Name"
+        Me.itemname.Name = "itemname"
+        Me.itemname.Width = 60
+        '
+        'comment
+        '
+        Me.comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.comment.FillWeight = 150.0!
+        Me.comment.HeaderText = "Description"
+        Me.comment.Name = "comment"
+        Me.comment.Width = 85
+        '
+        'associatedobject
+        '
+        Me.associatedobject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.associatedobject.HeaderText = "Object"
+        Me.associatedobject.Name = "associatedobject"
+        Me.associatedobject.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.associatedobject.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.associatedobject.Width = 63
+        '
+        'associatedproperty
+        '
+        Me.associatedproperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.associatedproperty.FillWeight = 200.0!
+        Me.associatedproperty.HeaderText = "Property"
+        Me.associatedproperty.Name = "associatedproperty"
+        Me.associatedproperty.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.associatedproperty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.associatedproperty.Width = 71
+        '
+        'monitoreditem
+        '
+        Me.monitoreditem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.monitoreditem.FillWeight = 144.5825!
+        Me.monitoreditem.HeaderText = "Monitored Item"
+        Me.monitoreditem.Name = "monitoreditem"
+        Me.monitoreditem.Width = 102
+        '
+        'selectitem
+        '
+        Me.selectitem.HeaderText = "Select"
+        Me.selectitem.Name = "selectitem"
+        Me.selectitem.Text = "..."
+        Me.selectitem.UseColumnTextForButtonValue = True
+        Me.selectitem.Width = 43
+        '
+        'currentvalue
+        '
+        Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle1
+        Me.currentvalue.FillWeight = 54.21845!
+        Me.currentvalue.HeaderText = "Current Val"
+        Me.currentvalue.Name = "currentvalue"
+        Me.currentvalue.ReadOnly = True
+        Me.currentvalue.Width = 84
+        '
+        'minimumvalue
+        '
+        Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle2
+        Me.minimumvalue.FillWeight = 54.21845!
+        Me.minimumvalue.HeaderText = "Min Val"
+        Me.minimumvalue.Name = "minimumvalue"
+        Me.minimumvalue.Width = 67
+        '
+        'maximumvalue
+        '
+        Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle3
+        Me.maximumvalue.FillWeight = 54.21845!
+        Me.maximumvalue.HeaderText = "Max Val"
+        Me.maximumvalue.Name = "maximumvalue"
+        Me.maximumvalue.Width = 70
+        '
+        'failsafevalue
+        '
+        Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle4
+        Me.failsafevalue.FillWeight = 54.21845!
+        Me.failsafevalue.HeaderText = "Val on Error"
+        Me.failsafevalue.Name = "failsafevalue"
+        Me.failsafevalue.Width = 87
+        '
+        'expression
+        '
+        Me.expression.HeaderText = "Expression"
+        Me.expression.Name = "expression"
+        Me.expression.Width = 83
+        '
+        'result
+        '
+        Me.result.HeaderText = "Result"
+        Me.result.Name = "result"
+        Me.result.ReadOnly = True
+        Me.result.Width = 62
+        '
+        'unit
+        '
+        Me.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.unit.FillWeight = 45.18204!
+        Me.unit.HeaderText = "Units"
+        Me.unit.Name = "unit"
+        Me.unit.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.unit.Width = 56
+        '
+        'lastupdate
+        '
+        Me.lastupdate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.lastupdate.FillWeight = 30.0!
+        Me.lastupdate.HeaderText = "Last Update"
+        Me.lastupdate.Name = "lastupdate"
+        Me.lastupdate.ReadOnly = True
+        Me.lastupdate.Width = 90
         '
         'OpenFileDialog1
         '
@@ -290,166 +450,6 @@ Partial Class Form1
         Me.Label1.TabIndex = 5
         Me.Label1.Text = "Connect to Server"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'ToolStripLabel1
-        '
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(46, 22)
-        Me.ToolStripLabel1.Text = "Interval"
-        '
-        'tsAutoUpdate
-        '
-        Me.tsAutoUpdate.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.tsAutoUpdate.Name = "tsAutoUpdate"
-        Me.tsAutoUpdate.Size = New System.Drawing.Size(40, 25)
-        Me.tsAutoUpdate.Text = "60"
-        '
-        'ToolStripLabel2
-        '
-        Me.ToolStripLabel2.Name = "ToolStripLabel2"
-        Me.ToolStripLabel2.Size = New System.Drawing.Size(12, 22)
-        Me.ToolStripLabel2.Text = "s"
-        '
-        'id
-        '
-        Me.id.HeaderText = "ID"
-        Me.id.MinimumWidth = 20
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        Me.id.Width = 43
-        '
-        'active
-        '
-        Me.active.FalseValue = "False"
-        Me.active.FillWeight = 15.0!
-        Me.active.HeaderText = ""
-        Me.active.MinimumWidth = 20
-        Me.active.Name = "active"
-        Me.active.TrueValue = "True"
-        Me.active.Width = 20
-        '
-        'itemname
-        '
-        Me.itemname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.itemname.FillWeight = 54.21845!
-        Me.itemname.HeaderText = "Name"
-        Me.itemname.Name = "itemname"
-        Me.itemname.Width = 60
-        '
-        'comment
-        '
-        Me.comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.comment.FillWeight = 150.0!
-        Me.comment.HeaderText = "Description"
-        Me.comment.Name = "comment"
-        Me.comment.Width = 85
-        '
-        'associatedobject
-        '
-        Me.associatedobject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.associatedobject.HeaderText = "Object"
-        Me.associatedobject.Name = "associatedobject"
-        Me.associatedobject.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.associatedobject.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.associatedobject.Width = 63
-        '
-        'associatedproperty
-        '
-        Me.associatedproperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.associatedproperty.FillWeight = 200.0!
-        Me.associatedproperty.HeaderText = "Property"
-        Me.associatedproperty.Name = "associatedproperty"
-        Me.associatedproperty.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.associatedproperty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.associatedproperty.Width = 71
-        '
-        'monitoreditem
-        '
-        Me.monitoreditem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.monitoreditem.FillWeight = 144.5825!
-        Me.monitoreditem.HeaderText = "Monitored Item"
-        Me.monitoreditem.Name = "monitoreditem"
-        Me.monitoreditem.Width = 102
-        '
-        'selectitem
-        '
-        Me.selectitem.HeaderText = "Select"
-        Me.selectitem.Name = "selectitem"
-        Me.selectitem.Text = "..."
-        Me.selectitem.UseColumnTextForButtonValue = True
-        Me.selectitem.Width = 43
-        '
-        'currentvalue
-        '
-        Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle5
-        Me.currentvalue.FillWeight = 54.21845!
-        Me.currentvalue.HeaderText = "Current Val"
-        Me.currentvalue.Name = "currentvalue"
-        Me.currentvalue.ReadOnly = True
-        Me.currentvalue.Width = 84
-        '
-        'minimumvalue
-        '
-        Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle6
-        Me.minimumvalue.FillWeight = 54.21845!
-        Me.minimumvalue.HeaderText = "Min Val"
-        Me.minimumvalue.Name = "minimumvalue"
-        Me.minimumvalue.Width = 67
-        '
-        'maximumvalue
-        '
-        Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle7
-        Me.maximumvalue.FillWeight = 54.21845!
-        Me.maximumvalue.HeaderText = "Max Val"
-        Me.maximumvalue.Name = "maximumvalue"
-        Me.maximumvalue.Width = 70
-        '
-        'failsafevalue
-        '
-        Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle8
-        Me.failsafevalue.FillWeight = 54.21845!
-        Me.failsafevalue.HeaderText = "Val on Error"
-        Me.failsafevalue.Name = "failsafevalue"
-        Me.failsafevalue.Width = 87
-        '
-        'expression
-        '
-        Me.expression.HeaderText = "Expression"
-        Me.expression.Name = "expression"
-        Me.expression.Width = 83
-        '
-        'result
-        '
-        Me.result.HeaderText = "Result"
-        Me.result.Name = "result"
-        Me.result.ReadOnly = True
-        Me.result.Width = 62
-        '
-        'unit
-        '
-        Me.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.unit.FillWeight = 45.18204!
-        Me.unit.HeaderText = "Units"
-        Me.unit.Name = "unit"
-        Me.unit.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.unit.Width = 56
-        '
-        'lastupdate
-        '
-        Me.lastupdate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.lastupdate.FillWeight = 30.0!
-        Me.lastupdate.HeaderText = "Last Update"
-        Me.lastupdate.Name = "lastupdate"
-        Me.lastupdate.ReadOnly = True
-        Me.lastupdate.Width = 90
         '
         'Form1
         '
