@@ -403,7 +403,6 @@
     <Content Include="opclibraries\App.ico" />
     <Content Include="opclibraries\BouncyCastle.Crypto.dll" />
     <Content Include="opclibraries\BouncyCastle.Crypto.xml" />
-    <Content Include="opclibraries\Ciloci.Flee.dll" />
     <Content Include="opclibraries\Microsoft.AspNetCore.Connections.Abstractions.dll" />
     <Content Include="opclibraries\Microsoft.AspNetCore.Connections.Abstractions.xml" />
     <Content Include="opclibraries\Microsoft.AspNetCore.Hosting.Abstractions.dll" />
@@ -605,6 +604,7 @@
     <Content Include="opclibraries\System.Xml.XmlSerializer.dll" />
     <Content Include="opclibraries\System.Xml.XPath.dll" />
     <Content Include="opclibraries\System.Xml.XPath.XDocument.dll" />
+    <None Include="Resources\App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

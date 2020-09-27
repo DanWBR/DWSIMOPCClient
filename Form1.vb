@@ -12,6 +12,7 @@ Imports Opc.Ua.Sample.Controls
 Imports System.Reflection
 Imports Org.BouncyCastle.Crypto.Engines
 Imports System.ComponentModel
+Imports Org.BouncyCastle.Security.Certificates
 
 Public Class Form1
 
@@ -34,6 +35,8 @@ Public Class Form1
     Private m_endpoints As ConfiguredEndpointCollection
     Private m_configuration As ApplicationConfiguration
     Private m_context As ServiceMessageContext
+
+    Private adding As Boolean = False
 
     Private Sub Form1_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
 
@@ -241,9 +244,13 @@ Public Class Form1
 
     Private Sub ToolStripButton3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton3.Click
 
+        adding = True
+
         Dim id As String = Guid.NewGuid.ToString
 
         Dim newitem As New OPCLink() With {.ID = id, .Name = "OPCLink" & Me.Grid1.Rows.Count, .Comment = "ItemDescription"}
+
+        LinkList.Add(id, newitem)
 
         Me.Grid1.Rows.Add()
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).HeaderCell.Value = Me.Grid1.Rows.Count
@@ -258,7 +265,7 @@ Public Class Form1
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("currentvalue").Value = newitem.MaximumValue
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("failsafevalue").Value = newitem.FailSafeValue
 
-        LinkList.Add(id, newitem)
+        adding = False
 
     End Sub
 
@@ -276,7 +283,10 @@ Public Class Form1
     Private Sub Grid1_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grid1.CellValueChanged
 
         If e.RowIndex >= 0 Then
-            Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+            Dim id As String = Grid1.Rows(e.RowIndex).Cells("id").Value
+            If id Is Nothing Then Exit Sub
+            If Not LinkList.ContainsKey(id) Then Exit Sub
+            Dim item = LinkList(id)
             Select Case e.ColumnIndex
                 Case 4
                     Dim cbc As DataGridViewComboBoxCell = Me.Grid1.Rows(e.RowIndex).Cells("associatedproperty")
@@ -746,6 +756,8 @@ Public Class Form1
 
         Grid1.Rows.Clear()
 
+        adding = True
+
         For Each p As OPCLink In LinkList.Values
 
             Try
@@ -772,6 +784,8 @@ Public Class Form1
             End Try
 
         Next
+
+        adding = False
 
     End Sub
 
@@ -874,6 +888,10 @@ Public Class Form1
 
         eventhandler(Me, New EventArgs, Nothing)
 
+    End Sub
+
+    Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
+        Process.Start(IO.Path.Combine(IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location), "opclibraries", "Opc.Ua.SampleClient.exe"))
     End Sub
 
     Private Sub UpdateTimer_Tick(sender As Object, e As EventArgs) Handles UpdateTimer.Tick
