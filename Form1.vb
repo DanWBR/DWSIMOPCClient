@@ -275,6 +275,7 @@ Public Class Form1
     Private Sub Grid1_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grid1.CellValueChanged
 
         If e.RowIndex >= 0 Then
+            Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
             Select Case e.ColumnIndex
                 Case 4
                     Dim cbc As DataGridViewComboBoxCell = Me.Grid1.Rows(e.RowIndex).Cells("associatedproperty")
@@ -282,10 +283,13 @@ Public Class Form1
                     With cbc.Items
                         If Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString <> "" Then
                             Dim props As String()
-                            If Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString = "Planilha" Then
+                            If Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString = "Spreadsheet" Then
                                 props = fsheet.FormSpreadsheet.GetCellString()
+                                item.ObjectID = "Spreadsheet"
                             Else
-                                props = Me.ReturnProperties(Me.Grid1.Rows(e.RowIndex).Cells("associatedobject").Value, False)
+                                Dim objtag = Me.Grid1.Rows(e.RowIndex).Cells("associatedobject").Value.ToString
+                                item.ObjectID = fsheet.SimulationObjects.Values.Where(Function(x) x.GraphicObject.Tag = objtag).FirstOrDefault.Name
+                                props = Me.ReturnProperties(objtag, False)
                             End If
                             For Each prop As String In props
                                 .Add(fsheet.GetTranslatedString(prop))
@@ -294,10 +298,11 @@ Public Class Form1
                     End With
                 Case 5
                     If Not Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value Is Nothing Then
-                        If Not Me.Grid1.Rows(e.RowIndex).Cells(4).Value.ToString = "Planilha" Then
+                        If Not Me.Grid1.Rows(e.RowIndex).Cells(4).Value.ToString = "Spreadsheet" Then
                             Dim props As String() = Me.ReturnProperties(Me.Grid1.Rows(e.RowIndex).Cells("associatedobject").Value, False)
                             For Each prop As String In props
                                 If fsheet.GetTranslatedString(prop) = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString Then
+                                    item.PropertyID = prop
                                     Dim obj As DWSIM.Interfaces.ISimulationObject = ReturnObject(Me.Grid1.Rows(e.RowIndex).Cells("associatedobject").Value)
                                     Me.Grid1.Rows(e.RowIndex).Cells("unit") = GetUnits(obj.GetPropertyUnit(prop))
                                     Exit For
@@ -307,25 +312,21 @@ Public Class Form1
                     End If
                 Case 9
                     Try
-                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
                         item.MinimumValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
                     Catch ex As Exception
                     End Try
                 Case 10
                     Try
-                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
                         item.MaximumValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
                     Catch ex As Exception
                     End Try
                 Case 11
                     Try
-                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
                         item.FailSafeValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
                     Catch ex As Exception
                     End Try
                 Case 12
                     Try
-                        Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
                         Dim expr As String = Grid1.Rows(e.RowIndex).Cells("expression").Value
                         Dim econtext As New ExpressionContext
                         econtext.Imports.AddType(GetType(System.Math))
@@ -342,6 +343,8 @@ Public Class Form1
                     Catch ex As Exception
                         Grid1.Rows(e.RowIndex).Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
                     End Try
+                Case 14
+                    item.ExpressionUnits = Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             End Select
         End If
 
@@ -749,12 +752,11 @@ Public Class Form1
                     Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "", "",
                                              p.MonitoredVariable.DisplayName.ToString() + " [" + p.MonitoredVariable.NodeId.ToString() + "]",
                                              "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
-                                             p.Expression, p.ExpressionResult, p.ExpressionUnits, p.LastUpdate})
+                                             p.Expression, p.ExpressionResult, "", p.LastUpdate})
                 Else
                     Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "", "",
-                                             "",
-                                             "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
-                                             p.Expression, p.ExpressionResult, p.ExpressionUnits, p.LastUpdate})
+                                             "", "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
+                                             p.Expression, p.ExpressionResult, "", p.LastUpdate})
                 End If
                 If p.ObjectID = "Spreadsheet" Then
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedobject").Value = "Spreadsheet"
@@ -762,6 +764,7 @@ Public Class Form1
                 Else
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedobject").Value = fsheet.SimulationObjects(p.ObjectID).GraphicObject.Tag
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("associatedproperty").Value = ReturnPropertyName(p.ObjectID, p.PropertyID)
+                    Grid1.Rows(Grid1.Rows.Count - 1).Cells("unit").Value = p.ExpressionUnits
                 End If
             Catch ex As Exception
                 fsheet.ShowMessage("Error: " & ex.ToString, IFlowsheet.MessageType.GeneralError)
@@ -793,35 +796,39 @@ Public Class Form1
 
             Dim ritem = selector.MonItem
 
-            Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
+            If ritem IsNot Nothing Then
 
-            item.MonitoredVariable = ritem
-            item.PreviousValue = item.CurrentValue
-            item.CurrentValue = m_session.ReadValue(ritem.NodeId).Value
-            item.LastUpdate = Date.Now
+                Dim item = LinkList(Grid1.Rows(e.RowIndex).Cells("id").Value)
 
-            Dim expr As String = Grid1.Rows(e.RowIndex).Cells("expression").Value
+                item.MonitoredVariable = ritem
+                item.PreviousValue = item.CurrentValue
+                item.CurrentValue = m_session.ReadValue(ritem.NodeId).Value
+                item.LastUpdate = Date.Now
 
-            Dim econtext As New ExpressionContext
-            econtext.Imports.AddType(GetType(System.Math))
-            econtext.Variables.Add("val", item.CurrentValue)
-            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
+                Dim expr As String = Grid1.Rows(e.RowIndex).Cells("expression").Value
 
-            Dim result As Object = exbase.Evaluate
+                Dim econtext As New ExpressionContext
+                econtext.Imports.AddType(GetType(System.Math))
+                econtext.Variables.Add("val", item.CurrentValue)
+                Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
 
-            If Double.TryParse(result, New Double) Then
-                item.ExpressionResult = result
-                Grid1.Rows(e.RowIndex).Cells("result").Value = result
-            Else
-                item.ExpressionResult = Double.NaN
-                Grid1.Rows(e.RowIndex).Cells("result").Value = Double.NaN
+                Dim result As Object = exbase.Evaluate
+
+                If Double.TryParse(result, New Double) Then
+                    item.ExpressionResult = result
+                    Grid1.Rows(e.RowIndex).Cells("result").Value = result
+                Else
+                    item.ExpressionResult = Double.NaN
+                    Grid1.Rows(e.RowIndex).Cells("result").Value = Double.NaN
+                End If
+
+                Grid1.Rows(e.RowIndex).Cells("lastupdate").Value = Date.Now.ToString
+
+                Grid1.Rows(e.RowIndex).Cells("currentvalue").Value = item.CurrentValue.ToString
+                Grid1.Rows(e.RowIndex).Cells("monitoreditem").Value = ritem.DisplayName.ToString() + " [" + ritem.NodeId.ToString() + "]"
+                Grid1.Rows(e.RowIndex).Cells("lastupdate").Value = Date.Now.ToString
+
             End If
-
-            Grid1.Rows(e.RowIndex).Cells("lastupdate").Value = Date.Now.ToString
-
-            Grid1.Rows(e.RowIndex).Cells("currentvalue").Value = item.CurrentValue.ToString
-            Grid1.Rows(e.RowIndex).Cells("monitoreditem").Value = ritem.DisplayName.ToString() + " [" + ritem.NodeId.ToString() + "]"
-            Grid1.Rows(e.RowIndex).Cells("lastupdate").Value = Date.Now.ToString
 
         End If
 
@@ -847,7 +854,7 @@ Public Class Form1
 
             Dim jsonstring = IO.File.ReadAllText(Me.OpenFileDialog1.FileName)
 
-            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonstring)
+            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, OPCLink))(jsonstring)
 
             ReadData()
 
@@ -856,7 +863,9 @@ Public Class Form1
     End Sub
 
     Private Sub btnAutoUpdate_CheckedChanged(sender As Object, e As EventArgs) Handles btnAutoUpdate.CheckedChanged
-        UpdateTimer.Enabled = btnAutoUpdate.Checked
+        If UpdateTimer IsNot Nothing Then
+            UpdateTimer.Enabled = btnAutoUpdate.Checked
+        End If
     End Sub
 
     Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
