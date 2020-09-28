@@ -53,7 +53,7 @@ Imports DWSIM.Interfaces
 
     Public ReadOnly Property Description() As String Implements DWSIM.Interfaces.IUtilityPlugin.Description
         Get
-            Return "DWSIM OPC UA Plugin"
+            Return "DWSIM OPC UA Client Plugin"
         End Get
     End Property
 
@@ -65,7 +65,7 @@ Imports DWSIM.Interfaces
 
     Public ReadOnly Property Name() As String Implements DWSIM.Interfaces.IUtilityPlugin.Name
         Get
-            Return "OPC UA Plugin"
+            Return "OPC UA Client"
         End Get
     End Property
 
