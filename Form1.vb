@@ -261,17 +261,16 @@ Public Class Form1
 
         Dim id As String = Guid.NewGuid.ToString
 
-        Dim newitem As New OPCLink() With {.ID = id, .Name = "OPCLink" & Me.Grid1.Rows.Count, .Comment = "ItemDescription"}
+        Dim newitem As New OPCLink() With {.ID = id, .Name = "OPCLink" & LinkList.Count, .Comment = "ItemDescription"}
 
         LinkList.Add(id, newitem)
 
         Me.Grid1.Rows.Add()
-        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).HeaderCell.Value = Me.Grid1.Rows.Count
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("id").Value = id
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("itemname").Value = newitem.Name
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("comment").Value = newitem.Comment
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("active").Value = True
-        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("itemname").Value = "OPCLink" & Me.Grid1.Rows.Count
+        Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("itemname").Value = newitem.Name
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("expression").Value = newitem.Expression
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("minimumvalue").Value = newitem.MinimumValue
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("maximumvalue").Value = newitem.MaximumValue
