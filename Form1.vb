@@ -13,6 +13,7 @@ Imports System.Reflection
 Imports Org.BouncyCastle.Crypto.Engines
 Imports System.ComponentModel
 Imports Org.BouncyCastle.Security.Certificates
+Imports System.Drawing
 
 Public Class Form1
 
@@ -148,7 +149,7 @@ Public Class Form1
             m_session.Close()
             m_session = Nothing
         End If
-
+        ServerUrlLB.Text = ""
     End Sub
 
     Private Sub EndpointSelectorCTRL_ConnectEndpoint(ByVal sender As Object, ByVal e As ConnectEndpointEventArgs) Handles EndpointSelectorCTRL.ConnectEndpoint
@@ -198,16 +199,29 @@ Public Class Form1
             Return
         End If
 
+        If ((Not (sender) Is Nothing) _
+            AndAlso (Not (sender.Endpoint) Is Nothing)) Then
+            ServerUrlLB.Text = Utils.Format("{0} ({1}) {2}", sender.Endpoint.EndpointUrl, sender.Endpoint.SecurityMode, IIf(sender.EndpointConfiguration.UseBinaryEncoding, "UABinary", "XML"))
+        Else
+            ServerUrlLB.Text = "None"
+        End If
+
         If ((Not (e) Is Nothing) _
-                    AndAlso (Not (m_session) Is Nothing)) Then
+            AndAlso (Not (m_session) Is Nothing)) Then
             If ServiceResult.IsGood(e.Status) Then
+                ServerStatusLB.Text = Utils.Format("Server Status: {0} {1:yyyy-MM-dd HH:mm:ss} {2}/{3}", e.CurrentState, e.CurrentTime.ToLocalTime, m_session.OutstandingRequestCount, m_session.DefunctRequestCount)
+                ServerStatusLB.ForeColor = Color.Empty
+                ServerStatusLB.Font = New Font(ServerStatusLB.Font, FontStyle.Regular)
             Else
+                ServerStatusLB.Text = String.Format("{0} {1}/{2}", e.Status, m_session.OutstandingRequestCount, m_session.DefunctRequestCount)
+                ServerStatusLB.ForeColor = Color.Red
+                ServerStatusLB.Font = New Font(ServerStatusLB.Font, FontStyle.Bold)
                 If (m_reconnectPeriod <= 0) Then
                     Return
                 End If
 
                 If ((m_reconnectHandler Is Nothing) _
-                            AndAlso (m_reconnectPeriod > 0)) Then
+                    AndAlso (m_reconnectPeriod > 0)) Then
                     m_reconnectHandler = New SessionReconnectHandler
                     m_reconnectHandler.BeginReconnect(m_session, (m_reconnectPeriod * 1000), Sub() StandardClient_Server_ReconnectComplete(sender, e))
                 End If
@@ -240,7 +254,6 @@ Public Class Form1
         End Try
 
     End Sub
-
 
     Private Sub ToolStripButton3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton3.Click
 
@@ -850,6 +863,8 @@ Public Class Form1
     End Sub
 
     Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
+
+        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=OPCPlugin")
 
     End Sub
 
