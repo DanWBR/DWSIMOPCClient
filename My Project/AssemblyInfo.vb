@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("DWSIM OPC UA Client Plugin")>
-<Assembly: AssemblyDescription("Plugin for Data Acquisition from OPC UA Servers")>
+<Assembly: AssemblyDescription("Plugin for Data Exchange with OPC UA Servers")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("DWSIMOPCClient")>
-<Assembly: AssemblyCopyright("Copyright © 2020 Daniel Medeiros")>
+<Assembly: AssemblyCopyright("Copyright © 2020-2021 Daniel Medeiros")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("2.0.0.0")>
+<Assembly: AssemblyFileVersion("2.0.0.0")>

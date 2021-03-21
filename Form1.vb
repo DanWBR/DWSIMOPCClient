@@ -14,6 +14,7 @@ Imports Org.BouncyCastle.Crypto.Engines
 Imports System.ComponentModel
 Imports Org.BouncyCastle.Security.Certificates
 Imports System.Drawing
+Imports DWSIM.ExtensionMethods
 
 Public Class Form1
 
@@ -26,7 +27,7 @@ Public Class Form1
 
     Public LinkList As Dictionary(Of String, OPCLink)
 
-    Public cbc2, cbc3, cbc4 As DataGridViewComboBoxCell
+    Public cbc2, cbc3, cbc4, cbc5 As DataGridViewComboBoxCell
 
     Private m_session As Session
     Private m_reconnectHandler As SessionReconnectHandler
@@ -43,9 +44,11 @@ Public Class Form1
 
         'remove SelectedObjectChanged event handlers
 
-        Dim myeventhandler As CustomEvent = AddressOf eventhandler
+        Dim myeventhandler As CustomEvent = AddressOf readhandler
+        Dim myeventhandler2 As CustomEvent = AddressOf writehandler
 
         RemoveHandler FlowsheetSolver.FlowsheetCalculationStarted, myeventhandler
+        RemoveHandler FlowsheetSolver.FlowsheetCalculationFinished, myeventhandler2
 
         My.Settings.Save()
 
@@ -53,9 +56,11 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        Dim myeventhandler As CustomEvent = AddressOf eventhandler
+        Dim myeventhandler As CustomEvent = AddressOf readhandler
+        Dim myeventhandler2 As CustomEvent = AddressOf writehandler
 
         AddHandler FlowsheetSolver.FlowsheetCalculationStarted, myeventhandler
+        AddHandler FlowsheetSolver.FlowsheetCalculationFinished, myeventhandler2
 
         LinkList = New Dictionary(Of String, OPCLink)
 
@@ -72,8 +77,14 @@ Public Class Form1
         cbc3.MaxDropDownItems = 10
         cbc3.DropDownWidth = 200
 
+        cbc5 = New DataGridViewComboBoxCell()
+        cbc5.MaxDropDownItems = 2
+
+        cbc5.Items.AddRange(New String() {"Read", "Write"})
+
         Me.Grid1.Columns("associatedobject").CellTemplate = cbc2
         Me.Grid1.Columns("associatedproperty").CellTemplate = cbc3
+        Me.Grid1.Columns("linktype").CellTemplate = cbc5
 
         Dim opcfile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwopc"
 
@@ -277,6 +288,12 @@ Public Class Form1
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("currentvalue").Value = newitem.MaximumValue
         Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("failsafevalue").Value = newitem.FailSafeValue
 
+        If newitem.LinkType = OPCLink.LType.Read Then
+            Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("linktype").Value = "Read"
+        Else
+            Me.Grid1.Rows(Me.Grid1.Rows.Count - 1).Cells("linktype").Value = "Write"
+        End If
+
         adding = False
 
     End Sub
@@ -333,22 +350,30 @@ Public Class Form1
                             Next
                         End If
                     End If
-                Case 9
+                Case 8
+                    If Not Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value Is Nothing Then
+                        If Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "Read" Then
+                            item.LinkType = OPCLink.LType.Read
+                        Else
+                            item.LinkType = OPCLink.LType.Write
+                        End If
+                    End If
+                Case 11
                     Try
                         item.MinimumValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
                     Catch ex As Exception
                     End Try
-                Case 10
+                Case 12
                     Try
                         item.MaximumValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
                     Catch ex As Exception
                     End Try
-                Case 11
+                Case 13
                     Try
                         item.FailSafeValue = Me.Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
                     Catch ex As Exception
                     End Try
-                Case 12
+                Case 14
                     Try
                         Dim expr As String = Grid1.Rows(e.RowIndex).Cells("expression").Value
                         Dim econtext As New ExpressionContext
@@ -366,7 +391,7 @@ Public Class Form1
                     Catch ex As Exception
                         Grid1.Rows(e.RowIndex).Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
                     End Try
-                Case 14
+                Case 16
                     item.ExpressionUnits = Grid1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             End Select
         End If
@@ -415,11 +440,7 @@ Public Class Form1
 
         For Each obj In fsheet.SimulationObjects.Values
             If objectTAG = obj.GraphicObject.Tag Then
-                If dependent Then
-                    Return obj.GetProperties(Interfaces.Enums.PropertyType.ALL)
-                Else
-                    Return obj.GetProperties(Interfaces.Enums.PropertyType.WR)
-                End If
+                Return obj.GetProperties(Interfaces.Enums.PropertyType.ALL)
                 Exit Function
             End If
         Next
@@ -618,63 +639,174 @@ Public Class Form1
 
     Private Sub ToolStripButton5_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton5.Click
 
+        Me.Grid1.Columns(9).DefaultCellStyle.Format = fsheet.FlowsheetOptions.NumberFormat
+        Me.Grid1.Columns(10).DefaultCellStyle.Format = fsheet.FlowsheetOptions.NumberFormat
+        Me.Grid1.Columns(11).DefaultCellStyle.Format = fsheet.FlowsheetOptions.NumberFormat
+        Me.Grid1.Columns(12).DefaultCellStyle.Format = fsheet.FlowsheetOptions.NumberFormat
+        Me.Grid1.Columns(13).DefaultCellStyle.Format = fsheet.FlowsheetOptions.NumberFormat
+        Me.Grid1.Columns(15).DefaultCellStyle.Format = fsheet.FlowsheetOptions.NumberFormat
+
         UpdateValues()
 
     End Sub
 
     Sub UpdateValues()
 
+        If m_session Is Nothing Then
+            fsheet.ShowMessage("OPC Plugin: please connect to a server to create a session.", IFlowsheet.MessageType.GeneralError)
+            Exit Sub
+        End If
+
         For Each r As DataGridViewRow In Grid1.Rows
 
             If r.Cells("active").Value = True Then
 
                 Dim item = LinkList(r.Cells("id").Value)
+
+                If item.MonitoredVariable IsNot Nothing Then
+
+                    Try
+
+                        r.Cells("servervalue").Value = ReadCurrentValue(item.MonitoredVariable.NodeId).Value
+
+                    Catch ex As Exception
+
+                        fsheet.ShowMessage("OPC Plugin: Error reading current value of node '" & r.Cells("monitoreditem").Value & "': " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+
+                    End Try
+
+                End If
+
                 Dim value As Double
 
-                Try
-                    value = m_session.ReadValue(item.MonitoredVariable.NodeId).Value
-                    r.Cells("currentvalue").Value = value
-                Catch ex As Exception
-                    fsheet.ShowMessage(String.Format("Error reading OPC Variable '{0}': {1}", item.MonitoredVariable.NodeId.ToString(), ex.Message), IFlowsheet.MessageType.GeneralError)
-                    r.Cells("currentvalue").Value = Double.NaN
-                    value = item.FailSafeValue
-                End Try
+                If r.Cells("linktype").Value = "Write" Then
 
-                Try
+                    Dim propval As Double
+                    Dim selectedprop As String = r.Cells("associatedproperty").Value
 
-                    If value < item.MinimumValue Then value = item.MinimumValue
-                    If value > item.MaximumValue Then value = item.MaximumValue
+                    Try
 
-                    item.CurrentValue = value
+                        If r.Cells("associatedobject").Value <> "Spreadsheet" Then
 
-                    Dim expr As String = r.Cells("expression").Value
+                            Dim objID As String = ReturnObject(r.Cells("associatedobject").Value).Name
 
-                    Dim econtext As New ExpressionContext
-                    econtext.Imports.AddType(GetType(System.Math))
-                    econtext.Variables.Add("val", value)
-                    Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
+                            Dim props As String() = Me.ReturnProperties(r.Cells("associatedobject").Value, False)
 
-                    Dim result As Object = exbase.Evaluate
+                            Dim propunit As String = r.Cells("unit").Value
 
-                    If Double.TryParse(result, New Double) Then
-                        item.ExpressionResult = result
-                        r.Cells("result").Value = result
-                    Else
-                        item.ExpressionResult = Double.NaN
-                        r.Cells("result").Value = Double.NaN
-                    End If
+                            For Each prop As String In props
+                                If fsheet.GetTranslatedString(prop) = selectedprop Then
+                                    value = Convert.ToDouble(fsheet.SimulationObjects(objID).GetPropertyValue(prop)).ConvertFromSI(propunit)
+                                    Exit For
+                                End If
+                            Next
 
-                    r.Cells("lastupdate").Value = Date.Now.ToString
+                            r.Cells("currentvalue").Value = value
 
-                Catch ex As Exception
+                            Try
 
-                    r.Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
+                                If value < item.MinimumValue Then value = item.MinimumValue
+                                If value > item.MaximumValue Then value = item.MaximumValue
 
-                End Try
+                                item.CurrentValue = value
 
-            Else
+                                Dim expr As String = r.Cells("expression").Value
 
+                                Dim econtext As New ExpressionContext
+                                econtext.Imports.AddType(GetType(System.Math))
+                                econtext.Variables.Add("val", value)
+                                Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
 
+                                Dim result As Object = exbase.Evaluate
+
+                                If Me.InvokeRequired Then
+                                    Me.Invoke(Sub()
+                                                  If Double.TryParse(result, New Double) Then
+                                                      item.ExpressionResult = result
+                                                      r.Cells("result").Value = result
+                                                  Else
+                                                      item.ExpressionResult = Double.NaN
+                                                      r.Cells("result").Value = Double.NaN
+                                                  End If
+                                              End Sub)
+                                Else
+                                    If Double.TryParse(result, New Double) Then
+                                        item.ExpressionResult = result
+                                        r.Cells("result").Value = result
+                                    Else
+                                        item.ExpressionResult = Double.NaN
+                                        r.Cells("result").Value = Double.NaN
+                                    End If
+                                End If
+
+                            Catch ex As Exception
+
+                                r.Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
+
+                            End Try
+
+                            fsheet.UpdateOpenEditForms()
+
+                        Else
+
+                            propval = r.Cells("result").Value
+
+                            fsheet.FormSpreadsheet.SetCellValue(selectedprop, propval)
+
+                            fsheet.UpdateSpreadsheet(Nothing)
+
+                        End If
+
+                    Catch ex As Exception
+
+                        fsheet.ShowMessage("Error writing '" & propval & "' to property '" & selectedprop & "' from object '" & r.Cells("associatedobject").Value & "': " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+
+                    End Try
+
+                Else
+
+                    Try
+                        value = m_session.ReadValue(item.MonitoredVariable.NodeId).Value
+                        r.Cells("currentvalue").Value = value
+                    Catch ex As Exception
+                        fsheet.ShowMessage(String.Format("Error reading OPC Variable '{0}': {1}", item.MonitoredVariable.NodeId.ToString(), ex.Message), IFlowsheet.MessageType.GeneralError)
+                        r.Cells("currentvalue").Value = Double.NaN
+                        value = item.FailSafeValue
+                    End Try
+
+                    Try
+
+                        If value < item.MinimumValue Then value = item.MinimumValue
+                        If value > item.MaximumValue Then value = item.MaximumValue
+
+                        item.CurrentValue = value
+
+                        Dim expr As String = r.Cells("expression").Value
+
+                        Dim econtext As New ExpressionContext
+                        econtext.Imports.AddType(GetType(System.Math))
+                        econtext.Variables.Add("val", value)
+                        Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(expr)
+
+                        Dim result As Object = exbase.Evaluate
+
+                        If Double.TryParse(result, New Double) Then
+                            item.ExpressionResult = result
+                            r.Cells("result").Value = result
+                        Else
+                            item.ExpressionResult = Double.NaN
+                            r.Cells("result").Value = Double.NaN
+                        End If
+
+                        r.Cells("lastupdate").Value = Date.Now.ToString
+
+                    Catch ex As Exception
+
+                        r.Cells("result").Value = "Error evaluating expression: " + ex.Message.ToString
+
+                    End Try
+
+                End If
 
             End If
 
@@ -682,7 +814,7 @@ Public Class Form1
 
     End Sub
 
-    Public Sub eventhandler(ByVal sender As Object, e As System.EventArgs, extraargs As Object)
+    Public Sub readhandler(ByVal sender As Object, e As System.EventArgs, extraargs As Object)
 
         If btnAutoUpdate.Checked Then ToolStripButton5_Click(sender, e)
 
@@ -693,42 +825,102 @@ Public Class Form1
                 Dim propval As Double
                 Dim selectedprop As String = r.Cells("associatedproperty").Value
 
-                Try
+                If r.Cells("linktype").Value = "Read" Then
 
-                    If r.Cells("associatedobject").Value <> "Spreadsheet" Then
+                    Try
 
-                        Dim objID As String = ReturnObject(r.Cells("associatedobject").Value).Name
+                        If r.Cells("associatedobject").Value <> "Spreadsheet" Then
 
-                        Dim props As String() = Me.ReturnProperties(r.Cells("associatedobject").Value, False)
+                            Dim objID As String = ReturnObject(r.Cells("associatedobject").Value).Name
 
-                        Dim propunit As String = r.Cells("unit").Value
+                            Dim props As String() = Me.ReturnProperties(r.Cells("associatedobject").Value, False)
+
+                            Dim propunit As String = r.Cells("unit").Value
+
+                            propval = r.Cells("result").Value
+
+                            For Each prop As String In props
+                                If fsheet.GetTranslatedString(prop) = selectedprop Then
+                                    fsheet.SimulationObjects(objID).SetPropertyValue(prop, SharedClasses.SystemsOfUnits.Converter.ConvertToSI(propunit, propval))
+                                    Exit For
+                                End If
+                            Next
+
+                            fsheet.UpdateOpenEditForms()
+
+                        Else
+
+                            propval = r.Cells("result").Value
+
+                            fsheet.FormSpreadsheet.SetCellValue(selectedprop, propval)
+
+                            fsheet.UpdateSpreadsheet(Nothing)
+
+                        End If
+
+                    Catch ex As Exception
+
+                        fsheet.ShowMessage("OPC Plugin: Error writing '" & propval & "' to property '" & selectedprop & "' from object '" & r.Cells("associatedobject").Value & "': " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+
+                    End Try
+
+                End If
+
+            End If
+
+        Next
+
+
+    End Sub
+
+    Public Sub writehandler(ByVal sender As Object, e As System.EventArgs, extraargs As Object)
+
+        If btnAutoUpdate.Checked Then ToolStripButton5_Click(sender, e)
+
+        For Each r As DataGridViewRow In Grid1.Rows
+
+            If r.Cells("active").Value = True Then
+
+                Dim propval As Double
+                Dim selectedprop As String = r.Cells("associatedproperty").Value
+
+                If r.Cells("linktype").Value = "Write" Then
+
+                    Dim item = LinkList(r.Cells("id").Value)
+
+                    Try
 
                         propval = r.Cells("result").Value
 
-                        For Each prop As String In props
-                            If fsheet.GetTranslatedString(prop) = selectedprop Then
-                                fsheet.SimulationObjects(objID).SetPropertyValue(prop, SharedClasses.SystemsOfUnits.Converter.ConvertToSI(propunit, propval))
-                                Exit For
-                            End If
-                        Next
+                        WriteValue(item.MonitoredVariable.NodeId, propval)
 
-                        fsheet.UpdateOpenEditForms()
+                        r.Cells("lastupdate").Value = Date.Now.ToString
 
-                    Else
+                        fsheet.ShowMessage(String.Format("OPC Plugin: Wrote value '{0}' to node '{1}'.", propval, r.Cells("monitoreditem").Value), IFlowsheet.MessageType.Information)
 
-                        propval = r.Cells("result").Value
+                    Catch ex As Exception
 
-                        fsheet.FormSpreadsheet.SetCellValue(selectedprop, propval)
+                        fsheet.ShowMessage("OPC Plugin: Error writing '" & propval & "' to node '" & r.Cells("monitoreditem").Value & "': " & ex.ToString, IFlowsheet.MessageType.GeneralError)
 
-                        fsheet.UpdateSpreadsheet(Nothing)
+                    End Try
 
-                    End If
+                    Try
 
-                Catch ex As Exception
+                        If Me.InvokeRequired Then
+                            Me.Invoke(Sub()
+                                          r.Cells("servervalue").Value = ReadCurrentValue(item.MonitoredVariable.NodeId).Value
+                                      End Sub)
+                        Else
+                            r.Cells("servervalue").Value = ReadCurrentValue(item.MonitoredVariable.NodeId).Value
+                        End If
 
-                    fsheet.ShowMessage("Error writing '" & propval & "' to property '" & selectedprop & "' from object '" & r.Cells("associatedobject").Value & "': " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+                    Catch ex As Exception
 
-                End Try
+                        fsheet.ShowMessage("OPC Plugin: Error reading current value of node '" & r.Cells("monitoreditem").Value & "': " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+
+                    End Try
+
+                End If
 
             End If
 
@@ -759,6 +951,11 @@ Public Class Form1
                 .Expression = r.Cells("expression").Value
                 .PreviousValue = 0.0#
                 .Comment = r.Cells("comment").Value
+                If r.Cells("linktype").Value = "Write" Then
+                    .LinkType = OPCLink.LType.Write
+                Else
+                    .LinkType = OPCLink.LType.Read
+                End If
             End With
         Next
 
@@ -776,11 +973,13 @@ Public Class Form1
                 If p.MonitoredVariable IsNot Nothing Then
                     Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "", "",
                                              p.MonitoredVariable.DisplayName.ToString() + " [" + p.MonitoredVariable.NodeId.ToString() + "]",
-                                             "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
+                                             "", IIf(p.LinkType = OPCLink.LType.Read, "Read", "Write"), p.CurrentValue,
+                                             p.ServerValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
                                              p.Expression, p.ExpressionResult, "", p.LastUpdate})
                 Else
                     Grid1.Rows.Add(New Object() {p.ID, p.Active, p.Name, p.Comment, "", "",
-                                             "", "", p.CurrentValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
+                                             "", "", IIf(p.LinkType = OPCLink.LType.Read, "Read", "Write"), p.CurrentValue,
+                                             p.ServerValue, p.MinimumValue, p.MaximumValue, p.FailSafeValue,
                                              p.Expression, p.ExpressionResult, "", p.LastUpdate})
                 End If
                 If p.ObjectID = "Spreadsheet" Then
@@ -792,7 +991,7 @@ Public Class Form1
                     Grid1.Rows(Grid1.Rows.Count - 1).Cells("unit").Value = p.ExpressionUnits
                 End If
             Catch ex As Exception
-                fsheet.ShowMessage("Error: " & ex.ToString, IFlowsheet.MessageType.GeneralError)
+                fsheet.ShowMessage("OPC Plugin: Error: " & ex.ToString, IFlowsheet.MessageType.GeneralError)
             End Try
 
         Next
@@ -900,7 +1099,7 @@ Public Class Form1
 
     Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
 
-        eventhandler(Me, New EventArgs, Nothing)
+        readhandler(Me, New EventArgs, Nothing)
 
     End Sub
 
@@ -912,14 +1111,108 @@ Public Class Form1
 
         UpdateValues()
 
-        eventhandler(Me, New EventArgs, Nothing)
+        readhandler(Me, New EventArgs, Nothing)
 
         If btnAutoCalculate.Checked Then fsheet.RequestCalculation()
 
     End Sub
 
     Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
         Disconnect()
+
     End Sub
+
+    Private Sub ToolStripButton9_Click(sender As Object, e As EventArgs) Handles ToolStripButton9.Click
+
+        writehandler(Me, New EventArgs, Nothing)
+
+    End Sub
+
+    Private Sub WriteValue(node As NodeId, value As Double)
+
+        Dim valueToWrite As WriteValue = New WriteValue
+        valueToWrite.NodeId = node
+        valueToWrite.AttributeId = Attributes.Value
+        valueToWrite.Value.Value = ChangeType(node, value)
+        valueToWrite.Value.StatusCode = StatusCodes.Good
+        valueToWrite.Value.ServerTimestamp = DateTime.MinValue
+        valueToWrite.Value.SourceTimestamp = DateTime.MinValue
+        Dim valuesToWrite As WriteValueCollection = New WriteValueCollection
+        valuesToWrite.Add(valueToWrite)
+        'write current value.
+        Dim results As StatusCodeCollection = Nothing
+        Dim diagnosticInfos As DiagnosticInfoCollection = Nothing
+        m_session.Write(Nothing, valuesToWrite, results, diagnosticInfos)
+        ClientBase.ValidateResponse(results, valuesToWrite)
+        ClientBase.ValidateDiagnosticInfos(diagnosticInfos, valuesToWrite)
+        If StatusCode.IsBad(results(0)) Then
+            Throw New ServiceResultException(results(0))
+        End If
+
+    End Sub
+
+    Private Function ChangeType(node As NodeId, value As Object) As Object
+
+        Dim currval = ReadCurrentValue(node)
+
+        Select Case (currval.WrappedValue.TypeInfo.BuiltInType)
+            Case BuiltInType.Boolean
+                value = Convert.ToBoolean(value)
+                Exit Select
+            Case BuiltInType.SByte
+                value = Convert.ToSByte(value)
+                Exit Select
+            Case BuiltInType.Byte
+                value = Convert.ToByte(value)
+                Exit Select
+            Case BuiltInType.Int16
+                value = Convert.ToInt16(value)
+                Exit Select
+            Case BuiltInType.UInt16
+                value = Convert.ToUInt16(value)
+                Exit Select
+            Case BuiltInType.Int32
+                value = Convert.ToInt32(value)
+                Exit Select
+            Case BuiltInType.UInt32
+                value = Convert.ToUInt32(value)
+                Exit Select
+            Case BuiltInType.Int64
+                value = Convert.ToInt64(value)
+                Exit Select
+            Case BuiltInType.UInt64
+                value = Convert.ToUInt64(value)
+                Exit Select
+            Case BuiltInType.Float
+                value = Convert.ToSingle(value)
+                Exit Select
+            Case BuiltInType.Double
+                value = Convert.ToDouble(value)
+                Exit Select
+            Case Else
+                value = value
+                Exit Select
+        End Select
+
+        Return value
+
+    End Function
+
+    Private Function ReadCurrentValue(node As NodeId) As DataValue
+
+        Dim nodeToRead As ReadValueId = New ReadValueId
+        nodeToRead.NodeId = node
+        nodeToRead.AttributeId = Attributes.Value
+        Dim nodesToRead As ReadValueIdCollection = New ReadValueIdCollection
+        nodesToRead.Add(nodeToRead)
+        Dim results As DataValueCollection = Nothing
+        Dim diagnosticInfos As DiagnosticInfoCollection = Nothing
+        m_session.Read(Nothing, 0, TimestampsToReturn.Neither, nodesToRead, results, diagnosticInfos)
+        ClientBase.ValidateResponse(results, nodesToRead)
+        ClientBase.ValidateDiagnosticInfos(diagnosticInfos, nodesToRead)
+        Return results(0)
+
+    End Function
 
 End Class

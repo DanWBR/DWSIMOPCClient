@@ -80,12 +80,14 @@ Imports DWSIM.Interfaces
         End Get
     End Property
 
+    Public PluginForm As Form1
+
     'this is called by DWSIM to open the form, so we need to pass the reference to the flowsheet to the form BEFORE returning it.
     Public ReadOnly Property UtilityForm() As Object Implements DWSIM.Interfaces.IUtilityPlugin.UtilityForm
         Get
-            Dim f As New Form1
-            f.fsheet = Me.fsheet
-            Return f
+            PluginForm = New Form1
+            PluginForm.fsheet = Me.fsheet
+            Return PluginForm
         End Get
     End Property
 

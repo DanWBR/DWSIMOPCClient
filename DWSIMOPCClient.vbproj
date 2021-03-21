@@ -56,6 +56,10 @@
       <HintPath>..\dwsim6\DistPackages\Windows\Ciloci.Flee.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DWSIM.ExtensionMethods">
+      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.ExtensionMethods.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DWSIM.FlowsheetSolver">
       <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.FlowsheetSolver.dll</HintPath>
       <Private>False</Private>
@@ -610,6 +614,9 @@
     <Content Include="opclibraries\System.Xml.XmlSerializer.dll" />
     <Content Include="opclibraries\System.Xml.XPath.dll" />
     <Content Include="opclibraries\System.Xml.XPath.XDocument.dll" />
+    <None Include="Resources\icons8-upload_to_ftp.png" />
+    <None Include="Resources\icons8-download_from_ftp.png" />
+    <None Include="Resources\icons8-server.png" />
     <None Include="Resources\App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
