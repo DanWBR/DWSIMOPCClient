@@ -86,13 +86,15 @@ Public Class Form1
         Me.Grid1.Columns("associatedproperty").CellTemplate = cbc3
         Me.Grid1.Columns("linktype").CellTemplate = cbc5
 
-        Dim opcfile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwopc"
-
-        If IO.File.Exists(opcfile) Then
-            Dim jsonstring = IO.File.ReadAllText(opcfile)
-            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, OPCLink))(jsonstring)
-            ReadData()
-        End If
+        Try
+            Dim opcfile As String = IO.Path.GetDirectoryName(fsheet.Options.FilePath) & "\" & IO.Path.GetFileNameWithoutExtension(fsheet.Options.FilePath) & ".dwopc"
+            If IO.File.Exists(opcfile) Then
+                Dim jsonstring = IO.File.ReadAllText(opcfile)
+                LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, OPCLink))(jsonstring)
+                ReadData()
+            End If
+        Catch ex As Exception
+        End Try
 
         Grid1.ChangeEditModeToOnPropertyChanged()
 
