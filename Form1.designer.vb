@@ -23,43 +23,33 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.tsAutoUpdate = New System.Windows.Forms.ToolStripTextBox()
-        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
-        Me.Grid1 = New System.Windows.Forms.DataGridView()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ServerUrlLB = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ServerStatusLB = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton9 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.btnAutoUpdate = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.tsAutoUpdate = New System.Windows.Forms.ToolStripTextBox()
+        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.btnAutoCalculate = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.btnAutoWrite = New System.Windows.Forms.ToolStripButton()
+        Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.active = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.itemname = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -78,6 +68,16 @@ Partial Class Form1
         Me.result = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lastupdate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ServerUrlLB = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ServerStatusLB = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,25 +97,122 @@ Partial Class Form1
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
         '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton3.Image = Global.DWSIMOPCClient.My.Resources.Resources.add
+        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton3.Text = "Add"
+        '
+        'ToolStripButton4
+        '
+        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton4.Image = Global.DWSIMOPCClient.My.Resources.Resources.minus
+        Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton4.Name = "ToolStripButton4"
+        Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton4.Text = "Remove"
+        '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
         Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripButton5
+        '
+        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton5.Image = Global.DWSIMOPCClient.My.Resources.Resources.refresh
+        Me.ToolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton5.Name = "ToolStripButton5"
+        Me.ToolStripButton5.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton5.Text = "Update Values"
+        '
+        'ToolStripButton8
+        '
+        Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton8.Image = Global.DWSIMOPCClient.My.Resources.Resources.icons8_download_from_ftp
+        Me.ToolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton8.Name = "ToolStripButton8"
+        Me.ToolStripButton8.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton8.Text = "Read from Server / Write to Flowsheet"
+        '
+        'ToolStripButton9
+        '
+        Me.ToolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton9.Image = Global.DWSIMOPCClient.My.Resources.Resources.icons8_upload_to_ftp
+        Me.ToolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton9.Name = "ToolStripButton9"
+        Me.ToolStripButton9.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton9.Text = "Read from Flowsheet / Write to Server"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
         '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.DWSIMOPCClient.My.Resources.Resources.folder_open
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton1.Text = "Open"
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.DWSIMOPCClient.My.Resources.Resources.save
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Save"
+        '
+        'ToolStripButton7
+        '
+        Me.ToolStripButton7.Checked = True
+        Me.ToolStripButton7.CheckOnClick = True
+        Me.ToolStripButton7.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton7.Image = Global.DWSIMOPCClient.My.Resources.Resources.yes
+        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton7.Name = "ToolStripButton7"
+        Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton7.Text = "AutoSave"
+        '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
+        'HelpToolStripButton
+        '
+        Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.HelpToolStripButton.Image = CType(resources.GetObject("HelpToolStripButton.Image"), System.Drawing.Image)
+        Me.HelpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.HelpToolStripButton.Name = "HelpToolStripButton"
+        Me.HelpToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.HelpToolStripButton.Text = "Help"
+        '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
+        '
+        'btnAutoUpdate
+        '
+        Me.btnAutoUpdate.Checked = True
+        Me.btnAutoUpdate.CheckOnClick = True
+        Me.btnAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.btnAutoUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnAutoUpdate.Image = CType(resources.GetObject("btnAutoUpdate.Image"), System.Drawing.Image)
+        Me.btnAutoUpdate.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnAutoUpdate.Name = "btnAutoUpdate"
+        Me.btnAutoUpdate.Size = New System.Drawing.Size(156, 22)
+        Me.btnAutoUpdate.Text = "AutoUpdate READ Variables"
+        Me.btnAutoUpdate.ToolTipText = "Auto update variable values from server and write them to the flowsheet. "
         '
         'ToolStripLabel1
         '
@@ -125,7 +222,6 @@ Partial Class Form1
         '
         'tsAutoUpdate
         '
-        Me.tsAutoUpdate.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.tsAutoUpdate.Name = "tsAutoUpdate"
         Me.tsAutoUpdate.Size = New System.Drawing.Size(30, 25)
         Me.tsAutoUpdate.Text = "60"
@@ -136,6 +232,41 @@ Partial Class Form1
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
         Me.ToolStripLabel2.Size = New System.Drawing.Size(12, 22)
         Me.ToolStripLabel2.Text = "s"
+        '
+        'btnAutoCalculate
+        '
+        Me.btnAutoCalculate.Checked = True
+        Me.btnAutoCalculate.CheckOnClick = True
+        Me.btnAutoCalculate.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.btnAutoCalculate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnAutoCalculate.Image = CType(resources.GetObject("btnAutoCalculate.Image"), System.Drawing.Image)
+        Me.btnAutoCalculate.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnAutoCalculate.Name = "btnAutoCalculate"
+        Me.btnAutoCalculate.Size = New System.Drawing.Size(86, 22)
+        Me.btnAutoCalculate.Text = "AutoCalculate"
+        Me.btnAutoCalculate.ToolTipText = "Requests a Flowsheet Calculation after a successful update cycle."
+        '
+        'ToolStripButton6
+        '
+        Me.ToolStripButton6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripButton6.Image = Global.DWSIMOPCClient.My.Resources.Resources.App
+        Me.ToolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton6.Name = "ToolStripButton6"
+        Me.ToolStripButton6.Size = New System.Drawing.Size(164, 22)
+        Me.ToolStripButton6.Text = "Start Sample Client/Server"
+        Me.ToolStripButton6.ToolTipText = "Start Sample Client/Server"
+        '
+        'btnAutoWrite
+        '
+        Me.btnAutoWrite.Checked = True
+        Me.btnAutoWrite.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.btnAutoWrite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnAutoWrite.Image = CType(resources.GetObject("btnAutoWrite.Image"), System.Drawing.Image)
+        Me.btnAutoWrite.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnAutoWrite.Name = "btnAutoWrite"
+        Me.btnAutoWrite.Size = New System.Drawing.Size(150, 22)
+        Me.btnAutoWrite.Text = "AutoWrite WRITE Variables"
+        Me.btnAutoWrite.ToolTipText = "Automatically updates WRITE variables after a successful flowsheet run"
         '
         'Grid1
         '
@@ -150,6 +281,163 @@ Partial Class Form1
         Me.Grid1.RowHeadersWidth = 25
         Me.Grid1.Size = New System.Drawing.Size(824, 336)
         Me.Grid1.TabIndex = 1
+        '
+        'id
+        '
+        Me.id.HeaderText = "ID"
+        Me.id.MinimumWidth = 20
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        Me.id.Width = 43
+        '
+        'active
+        '
+        Me.active.FalseValue = "False"
+        Me.active.FillWeight = 15.0!
+        Me.active.HeaderText = ""
+        Me.active.MinimumWidth = 20
+        Me.active.Name = "active"
+        Me.active.TrueValue = "True"
+        Me.active.Width = 20
+        '
+        'itemname
+        '
+        Me.itemname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.itemname.FillWeight = 54.21845!
+        Me.itemname.HeaderText = "Name"
+        Me.itemname.Name = "itemname"
+        Me.itemname.Width = 60
+        '
+        'comment
+        '
+        Me.comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.comment.FillWeight = 150.0!
+        Me.comment.HeaderText = "Description"
+        Me.comment.Name = "comment"
+        Me.comment.Width = 85
+        '
+        'associatedobject
+        '
+        Me.associatedobject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.associatedobject.HeaderText = "Object"
+        Me.associatedobject.Name = "associatedobject"
+        Me.associatedobject.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.associatedobject.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.associatedobject.Width = 63
+        '
+        'associatedproperty
+        '
+        Me.associatedproperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.associatedproperty.FillWeight = 200.0!
+        Me.associatedproperty.HeaderText = "Property"
+        Me.associatedproperty.Name = "associatedproperty"
+        Me.associatedproperty.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.associatedproperty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.associatedproperty.Width = 71
+        '
+        'monitoreditem
+        '
+        Me.monitoreditem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.monitoreditem.FillWeight = 144.5825!
+        Me.monitoreditem.HeaderText = "Monitored Item"
+        Me.monitoreditem.Name = "monitoreditem"
+        Me.monitoreditem.Width = 102
+        '
+        'selectitem
+        '
+        Me.selectitem.HeaderText = "Select"
+        Me.selectitem.Name = "selectitem"
+        Me.selectitem.Text = "..."
+        Me.selectitem.UseColumnTextForButtonValue = True
+        Me.selectitem.Width = 43
+        '
+        'linktype
+        '
+        Me.linktype.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.linktype.HeaderText = "Type"
+        Me.linktype.Name = "linktype"
+        Me.linktype.Width = 37
+        '
+        'currentvalue
+        '
+        Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle1
+        Me.currentvalue.FillWeight = 54.21845!
+        Me.currentvalue.HeaderText = "Current Val"
+        Me.currentvalue.Name = "currentvalue"
+        Me.currentvalue.ReadOnly = True
+        Me.currentvalue.Width = 84
+        '
+        'servervalue
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.servervalue.DefaultCellStyle = DataGridViewCellStyle2
+        Me.servervalue.HeaderText = "Server Val"
+        Me.servervalue.Name = "servervalue"
+        Me.servervalue.ReadOnly = True
+        Me.servervalue.Width = 81
+        '
+        'minimumvalue
+        '
+        Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle3
+        Me.minimumvalue.FillWeight = 54.21845!
+        Me.minimumvalue.HeaderText = "Min Val"
+        Me.minimumvalue.Name = "minimumvalue"
+        Me.minimumvalue.Width = 67
+        '
+        'maximumvalue
+        '
+        Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle4
+        Me.maximumvalue.FillWeight = 54.21845!
+        Me.maximumvalue.HeaderText = "Max Val"
+        Me.maximumvalue.Name = "maximumvalue"
+        Me.maximumvalue.Width = 70
+        '
+        'failsafevalue
+        '
+        Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle5
+        Me.failsafevalue.FillWeight = 54.21845!
+        Me.failsafevalue.HeaderText = "Val on Error"
+        Me.failsafevalue.Name = "failsafevalue"
+        Me.failsafevalue.Width = 87
+        '
+        'expression
+        '
+        Me.expression.HeaderText = "Expression"
+        Me.expression.Name = "expression"
+        Me.expression.Width = 83
+        '
+        'result
+        '
+        Me.result.HeaderText = "Result"
+        Me.result.Name = "result"
+        Me.result.ReadOnly = True
+        Me.result.Width = 62
+        '
+        'unit
+        '
+        Me.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.unit.FillWeight = 45.18204!
+        Me.unit.HeaderText = "Units"
+        Me.unit.Name = "unit"
+        Me.unit.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.unit.Width = 56
+        '
+        'lastupdate
+        '
+        Me.lastupdate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.lastupdate.FillWeight = 30.0!
+        Me.lastupdate.HeaderText = "Last Update"
+        Me.lastupdate.Name = "lastupdate"
+        Me.lastupdate.ReadOnly = True
+        Me.lastupdate.Width = 90
         '
         'OpenFileDialog1
         '
@@ -256,299 +544,10 @@ Partial Class Form1
         Me.ServerStatusLB.Name = "ServerStatusLB"
         Me.ServerStatusLB.Size = New System.Drawing.Size(0, 17)
         '
-        'ToolStripButton3
-        '
-        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIMOPCClient.My.Resources.Resources.add
-        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton3.Name = "ToolStripButton3"
-        Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton3.Text = "Add"
-        '
-        'ToolStripButton4
-        '
-        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton4.Image = Global.DWSIMOPCClient.My.Resources.Resources.minus
-        Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton4.Name = "ToolStripButton4"
-        Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton4.Text = "Remove"
-        '
-        'ToolStripButton5
-        '
-        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton5.Image = Global.DWSIMOPCClient.My.Resources.Resources.refresh
-        Me.ToolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton5.Name = "ToolStripButton5"
-        Me.ToolStripButton5.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton5.Text = "Update Values"
-        '
-        'ToolStripButton8
-        '
-        Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton8.Image = Global.DWSIMOPCClient.My.Resources.Resources.icons8_download_from_ftp
-        Me.ToolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton8.Name = "ToolStripButton8"
-        Me.ToolStripButton8.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton8.Text = "Read from Server / Write to Flowsheet"
-        '
-        'ToolStripButton9
-        '
-        Me.ToolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton9.Image = Global.DWSIMOPCClient.My.Resources.Resources.icons8_upload_to_ftp
-        Me.ToolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton9.Name = "ToolStripButton9"
-        Me.ToolStripButton9.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton9.Text = "Read from Flowsheet / Write to Server"
-        '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.DWSIMOPCClient.My.Resources.Resources.folder_open
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton1.Text = "Open"
-        '
-        'ToolStripButton2
-        '
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIMOPCClient.My.Resources.Resources.save
-        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton2.Text = "Save"
-        '
-        'ToolStripButton7
-        '
-        Me.ToolStripButton7.Checked = True
-        Me.ToolStripButton7.CheckOnClick = True
-        Me.ToolStripButton7.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton7.Image = Global.DWSIMOPCClient.My.Resources.Resources.yes
-        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton7.Name = "ToolStripButton7"
-        Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton7.Text = "AutoSave"
-        '
-        'HelpToolStripButton
-        '
-        Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.HelpToolStripButton.Image = CType(resources.GetObject("HelpToolStripButton.Image"), System.Drawing.Image)
-        Me.HelpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.HelpToolStripButton.Name = "HelpToolStripButton"
-        Me.HelpToolStripButton.Size = New System.Drawing.Size(23, 22)
-        Me.HelpToolStripButton.Text = "Help"
-        '
-        'btnAutoUpdate
-        '
-        Me.btnAutoUpdate.Checked = True
-        Me.btnAutoUpdate.CheckOnClick = True
-        Me.btnAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.btnAutoUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnAutoUpdate.Image = CType(resources.GetObject("btnAutoUpdate.Image"), System.Drawing.Image)
-        Me.btnAutoUpdate.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnAutoUpdate.Name = "btnAutoUpdate"
-        Me.btnAutoUpdate.Size = New System.Drawing.Size(156, 22)
-        Me.btnAutoUpdate.Text = "AutoUpdate READ Variables"
-        Me.btnAutoUpdate.ToolTipText = "Auto update variable values from server and write them to the flowsheet. "
-        '
-        'btnAutoCalculate
-        '
-        Me.btnAutoCalculate.Checked = True
-        Me.btnAutoCalculate.CheckOnClick = True
-        Me.btnAutoCalculate.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.btnAutoCalculate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnAutoCalculate.Image = CType(resources.GetObject("btnAutoCalculate.Image"), System.Drawing.Image)
-        Me.btnAutoCalculate.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnAutoCalculate.Name = "btnAutoCalculate"
-        Me.btnAutoCalculate.Size = New System.Drawing.Size(86, 22)
-        Me.btnAutoCalculate.Text = "AutoCalculate"
-        Me.btnAutoCalculate.ToolTipText = "Requests a Flowsheet Calculation after a successful update cycle."
-        '
-        'ToolStripButton6
-        '
-        Me.ToolStripButton6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ToolStripButton6.Image = Global.DWSIMOPCClient.My.Resources.Resources.App
-        Me.ToolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton6.Name = "ToolStripButton6"
-        Me.ToolStripButton6.Size = New System.Drawing.Size(164, 22)
-        Me.ToolStripButton6.Text = "Start Sample Client/Server"
-        Me.ToolStripButton6.ToolTipText = "Start Sample Client/Server"
-        '
-        'btnAutoWrite
-        '
-        Me.btnAutoWrite.Checked = True
-        Me.btnAutoWrite.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.btnAutoWrite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnAutoWrite.Image = CType(resources.GetObject("btnAutoWrite.Image"), System.Drawing.Image)
-        Me.btnAutoWrite.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnAutoWrite.Name = "btnAutoWrite"
-        Me.btnAutoWrite.Size = New System.Drawing.Size(150, 22)
-        Me.btnAutoWrite.Text = "AutoWrite WRITE Variables"
-        Me.btnAutoWrite.ToolTipText = "Automatically updates WRITE variables after a successful flowsheet run"
-        '
-        'id
-        '
-        Me.id.HeaderText = "ID"
-        Me.id.MinimumWidth = 20
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        Me.id.Width = 43
-        '
-        'active
-        '
-        Me.active.FalseValue = "False"
-        Me.active.FillWeight = 15.0!
-        Me.active.HeaderText = ""
-        Me.active.MinimumWidth = 20
-        Me.active.Name = "active"
-        Me.active.TrueValue = "True"
-        Me.active.Width = 20
-        '
-        'itemname
-        '
-        Me.itemname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.itemname.FillWeight = 54.21845!
-        Me.itemname.HeaderText = "Name"
-        Me.itemname.Name = "itemname"
-        Me.itemname.Width = 60
-        '
-        'comment
-        '
-        Me.comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.comment.FillWeight = 150.0!
-        Me.comment.HeaderText = "Description"
-        Me.comment.Name = "comment"
-        Me.comment.Width = 85
-        '
-        'associatedobject
-        '
-        Me.associatedobject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.associatedobject.HeaderText = "Object"
-        Me.associatedobject.Name = "associatedobject"
-        Me.associatedobject.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.associatedobject.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.associatedobject.Width = 63
-        '
-        'associatedproperty
-        '
-        Me.associatedproperty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.associatedproperty.FillWeight = 200.0!
-        Me.associatedproperty.HeaderText = "Property"
-        Me.associatedproperty.Name = "associatedproperty"
-        Me.associatedproperty.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.associatedproperty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.associatedproperty.Width = 71
-        '
-        'monitoreditem
-        '
-        Me.monitoreditem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.monitoreditem.FillWeight = 144.5825!
-        Me.monitoreditem.HeaderText = "Monitored Item"
-        Me.monitoreditem.Name = "monitoreditem"
-        Me.monitoreditem.Width = 102
-        '
-        'selectitem
-        '
-        Me.selectitem.HeaderText = "Select"
-        Me.selectitem.Name = "selectitem"
-        Me.selectitem.Text = "..."
-        Me.selectitem.UseColumnTextForButtonValue = True
-        Me.selectitem.Width = 43
-        '
-        'linktype
-        '
-        Me.linktype.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.linktype.HeaderText = "Type"
-        Me.linktype.Name = "linktype"
-        Me.linktype.Width = 37
-        '
-        'currentvalue
-        '
-        Me.currentvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentvalue.DefaultCellStyle = DataGridViewCellStyle16
-        Me.currentvalue.FillWeight = 54.21845!
-        Me.currentvalue.HeaderText = "Current Val"
-        Me.currentvalue.Name = "currentvalue"
-        Me.currentvalue.ReadOnly = True
-        Me.currentvalue.Width = 84
-        '
-        'servervalue
-        '
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.servervalue.DefaultCellStyle = DataGridViewCellStyle17
-        Me.servervalue.HeaderText = "Server Val"
-        Me.servervalue.Name = "servervalue"
-        Me.servervalue.ReadOnly = True
-        Me.servervalue.Width = 81
-        '
-        'minimumvalue
-        '
-        Me.minimumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.minimumvalue.DefaultCellStyle = DataGridViewCellStyle18
-        Me.minimumvalue.FillWeight = 54.21845!
-        Me.minimumvalue.HeaderText = "Min Val"
-        Me.minimumvalue.Name = "minimumvalue"
-        Me.minimumvalue.Width = 67
-        '
-        'maximumvalue
-        '
-        Me.maximumvalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.maximumvalue.DefaultCellStyle = DataGridViewCellStyle19
-        Me.maximumvalue.FillWeight = 54.21845!
-        Me.maximumvalue.HeaderText = "Max Val"
-        Me.maximumvalue.Name = "maximumvalue"
-        Me.maximumvalue.Width = 70
-        '
-        'failsafevalue
-        '
-        Me.failsafevalue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.failsafevalue.DefaultCellStyle = DataGridViewCellStyle20
-        Me.failsafevalue.FillWeight = 54.21845!
-        Me.failsafevalue.HeaderText = "Val on Error"
-        Me.failsafevalue.Name = "failsafevalue"
-        Me.failsafevalue.Width = 87
-        '
-        'expression
-        '
-        Me.expression.HeaderText = "Expression"
-        Me.expression.Name = "expression"
-        Me.expression.Width = 83
-        '
-        'result
-        '
-        Me.result.HeaderText = "Result"
-        Me.result.Name = "result"
-        Me.result.ReadOnly = True
-        Me.result.Width = 62
-        '
-        'unit
-        '
-        Me.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.unit.FillWeight = 45.18204!
-        Me.unit.HeaderText = "Units"
-        Me.unit.Name = "unit"
-        Me.unit.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.unit.Width = 56
-        '
-        'lastupdate
-        '
-        Me.lastupdate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.lastupdate.FillWeight = 30.0!
-        Me.lastupdate.HeaderText = "Last Update"
-        Me.lastupdate.Name = "lastupdate"
-        Me.lastupdate.ReadOnly = True
-        Me.lastupdate.Width = 90
-        '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.ClientSize = New System.Drawing.Size(957, 415)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TableLayoutPanel1)

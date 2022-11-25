@@ -49,35 +49,35 @@
       <HintPath>packages\Portable.BouncyCastle.1.8.6.7\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="CapeOpen">
-      <HintPath>..\dwsim6\DistPackages\Windows\CapeOpen.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\CapeOpen.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Ciloci.Flee">
-      <HintPath>..\dwsim6\DistPackages\Windows\Ciloci.Flee.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\Ciloci.Flee.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DWSIM.ExtensionMethods">
-      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.ExtensionMethods.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.ExtensionMethods.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DWSIM.FlowsheetSolver">
-      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.FlowsheetSolver.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.FlowsheetSolver.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DWSIM.GlobalSettings">
-      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.GlobalSettings.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.GlobalSettings.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DWSIM.Interfaces">
-      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.Interfaces.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.Interfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DWSIM.SharedClasses">
-      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.SharedClasses.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.SharedClasses.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DWSIM.XMLSerializer">
-      <HintPath>..\dwsim6\DistPackages\Windows\DWSIM.XMLSerializer.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.XMLSerializer.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Connections.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -295,7 +295,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
-      <HintPath>..\dwsim6\DistPackages\Windows\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <HintPath>..\dwsim\DistPackages\Windows\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
