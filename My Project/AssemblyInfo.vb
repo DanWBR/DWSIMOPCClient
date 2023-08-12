@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Plugin for Data Exchange with OPC UA Servers")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("DWSIMOPCClient")>
-<Assembly: AssemblyCopyright("Copyright © 2020-2021 Daniel Medeiros")>
+<Assembly: AssemblyCopyright("Copyright © 2020-2023 Daniel Medeiros")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("2.0.1.0")>
-<Assembly: AssemblyFileVersion("2.0.1.0")>
+<Assembly: AssemblyVersion("3.0.0.0")>
+<Assembly: AssemblyFileVersion("3.0.0.0")>

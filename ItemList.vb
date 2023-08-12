@@ -13,4 +13,9 @@ Public Class ItemList
 
     End Sub
 
+    Private Sub ItemList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        DWSIM.ExtensionMethods.ChangeDefaultFont(Me)
+
+    End Sub
 End Class

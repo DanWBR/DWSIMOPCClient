@@ -15,6 +15,9 @@ Imports System.ComponentModel
 Imports Org.BouncyCastle.Security.Certificates
 Imports System.Drawing
 Imports DWSIM.ExtensionMethods
+Imports DWSIM.SharedClassesCSharp.FilePicker
+Imports System.IO
+Imports DWSIM.GlobalSettings
 
 Public Class Form1
 
@@ -56,6 +59,19 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
+        If Settings.DpiScale > 1.0 Then
+            Me.ToolStrip1.AutoSize = False
+            Me.ToolStrip1.Size = New Size(ToolStrip1.Width, 28 * Settings.DpiScale)
+            Me.ToolStrip1.ImageScalingSize = New Size(20 * Settings.DpiScale, 20 * Settings.DpiScale)
+            For Each item In Me.ToolStrip1.Items
+                If TryCast(item, ToolStripButton) IsNot Nothing Then
+                    DirectCast(item, ToolStripButton).Size = New Size(ToolStrip1.ImageScalingSize.Width, ToolStrip1.ImageScalingSize.Height)
+                End If
+            Next
+            Me.ToolStrip1.AutoSize = True
+            Me.ToolStrip1.Invalidate()
+        End If
+
         Dim myeventhandler As CustomEvent = AddressOf readhandler
         Dim myeventhandler2 As CustomEvent = AddressOf writehandler
 
@@ -68,7 +84,7 @@ Public Class Form1
         cbc2.Sorted = False
         cbc2.MaxDropDownItems = 10
         cbc2.DropDownWidth = 200
-        cbc2.Items.Add("Planilha")
+        cbc2.Items.Add("Spreadsheet")
         For Each obj In fsheet.SimulationObjects.Values
             cbc2.Items.Add(obj.GraphicObject.Tag)
         Next
@@ -105,8 +121,8 @@ Public Class Form1
 
         m_application = app
 
-        Dim cpath = AppDomain.CurrentDomain.BaseDirectory
-        cpath = System.IO.Path.Combine(cpath, "plugins", "DWSIMOPCClient.Config.xml")
+        Dim cpath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+        cpath = System.IO.Path.Combine(cpath, "DWSIMOPCClient.Config.xml")
 
         app.LoadApplicationConfiguration(cpath, False).Wait()
         ' check the application certificate.
@@ -128,6 +144,8 @@ Public Class Form1
         If Not m_configuration.SecurityConfiguration.AutoAcceptUntrustedCertificates Then
             AddHandler m_configuration.CertificateValidator.CertificateValidation, AddressOf CertificateValidator_CertificateValidation
         End If
+
+        DWSIM.ExtensionMethods.ChangeDefaultFont(Me)
 
         'initialize control state.
         Disconnect()
@@ -1004,12 +1022,26 @@ Public Class Form1
 
     Private Sub ToolStripButton2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton2.Click
 
-        If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        Dim filePickerForm As IFilePicker = FilePickerService.GetInstance().GetFilePicker()
 
-            Dim jsonstring = Newtonsoft.Json.JsonConvert.SerializeObject(LinkList, Newtonsoft.Json.Formatting.Indented)
+        Dim handler As IVirtualFile = filePickerForm.ShowSaveDialog(
+            New List(Of FilePickerAllowedType) From {New FilePickerAllowedType("OPC Variable List", "*.dwopc")})
 
-            IO.File.WriteAllText(SaveFileDialog1.FileName, jsonstring)
-
+        If handler IsNot Nothing Then
+            Try
+                Dim jsonstring = Newtonsoft.Json.JsonConvert.SerializeObject(LinkList, Newtonsoft.Json.Formatting.Indented)
+                Using stream As New IO.MemoryStream()
+                    Using writer As New StreamWriter(stream) With {.AutoFlush = True}
+                        writer.Write(jsonstring)
+                        handler.Write(stream)
+                    End Using
+                End Using
+            Catch ex As Exception
+                MessageBox.Show(fsheet.GetFlowsheet.GetTranslatedString("Erroaosalvararquivo") & " " & ex.Message,
+                                fsheet.GetFlowsheet.GetTranslatedString("Erro"),
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error)
+            End Try
         End If
 
     End Sub
@@ -1064,7 +1096,7 @@ Public Class Form1
 
     Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
 
-        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=OPCPlugin")
+        Process.Start("https://dwsim.org/wiki/index.php?title=OPCPlugin")
 
     End Sub
 
@@ -1080,14 +1112,19 @@ Public Class Form1
 
     Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
 
-        If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        Dim filePickerForm As IFilePicker = FilePickerService.GetInstance().GetFilePicker()
 
-            Dim jsonstring = IO.File.ReadAllText(Me.OpenFileDialog1.FileName)
+        Dim handler As IVirtualFile = filePickerForm.ShowOpenDialog(
+            New List(Of FilePickerAllowedType) From {New FilePickerAllowedType("OPC Variable List", "*.dwopc")})
 
-            LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, OPCLink))(jsonstring)
-
-            ReadData()
-
+        If handler IsNot Nothing Then
+            Try
+                Dim text = handler.ReadAllText()
+                LinkList = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, OPCLink))(text)
+                ReadData()
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
 
     End Sub

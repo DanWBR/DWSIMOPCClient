@@ -76,6 +76,10 @@
       <HintPath>..\dwsim\DistPackages\Windows\DWSIM.SharedClasses.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DWSIM.SharedClassesCSharp">
+      <HintPath>..\dwsim\DistPackages\Windows\DWSIM.SharedClassesCSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DWSIM.XMLSerializer">
       <HintPath>..\dwsim\DistPackages\Windows\DWSIM.XMLSerializer.dll</HintPath>
       <Private>False</Private>

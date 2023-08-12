@@ -68,8 +68,6 @@ Partial Class Form1
         Me.result = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lastupdate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.EndpointSelectorCTRL = New Opc.Ua.Client.Controls.EndpointSelectorCtrl()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.SessionsCTRL = New Opc.Ua.Sample.Controls.SessionTreeCtrl()
@@ -439,32 +437,16 @@ Partial Class Form1
         Me.lastupdate.ReadOnly = True
         Me.lastupdate.Width = 90
         '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.DefaultExt = "dwsim"
-        Me.OpenFileDialog1.Filter = "OPC Variable List (*.dwopc)|*.dwopc"
-        Me.OpenFileDialog1.FilterIndex = 6
-        Me.OpenFileDialog1.RestoreDirectory = True
-        Me.OpenFileDialog1.Title = "Load Variable List"
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "dwsim"
-        Me.SaveFileDialog1.Filter = "OPC Variable List (*.dwopc)|*.dwopc"
-        Me.SaveFileDialog1.RestoreDirectory = True
-        Me.SaveFileDialog1.SupportMultiDottedExtensions = True
-        Me.SaveFileDialog1.Title = "Save Variable List"
-        '
         'EndpointSelectorCTRL
         '
         Me.EndpointSelectorCTRL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.EndpointSelectorCTRL.Location = New System.Drawing.Point(103, 3)
+        Me.EndpointSelectorCTRL.Location = New System.Drawing.Point(122, 3)
         Me.EndpointSelectorCTRL.MaximumSize = New System.Drawing.Size(2048, 27)
         Me.EndpointSelectorCTRL.MinimumSize = New System.Drawing.Size(100, 27)
         Me.EndpointSelectorCTRL.Name = "EndpointSelectorCTRL"
         Me.EndpointSelectorCTRL.Padding = New System.Windows.Forms.Padding(1, 0, 0, 0)
         Me.EndpointSelectorCTRL.SelectedEndpoint = Nothing
-        Me.EndpointSelectorCTRL.Size = New System.Drawing.Size(851, 27)
+        Me.EndpointSelectorCTRL.Size = New System.Drawing.Size(832, 27)
         Me.EndpointSelectorCTRL.TabIndex = 4
         '
         'SplitContainer1
@@ -502,7 +484,7 @@ Partial Class Form1
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.EndpointSelectorCTRL, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 0)
@@ -516,10 +498,11 @@ Partial Class Form1
         '
         'Label1
         '
+        Me.Label1.AutoSize = True
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(94, 32)
+        Me.Label1.Size = New System.Drawing.Size(113, 32)
         Me.Label1.TabIndex = 5
         Me.Label1.Text = "Connect to Server"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -567,6 +550,7 @@ Partial Class Form1
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -587,8 +571,6 @@ Partial Class Form1
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripButton7 As System.Windows.Forms.ToolStripButton
     Friend WithEvents btnAutoUpdate As System.Windows.Forms.ToolStripButton
-    Public WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
-    Public WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents ToolStripButton8 As System.Windows.Forms.ToolStripButton
     Private WithEvents EndpointSelectorCTRL As Opc.Ua.Client.Controls.EndpointSelectorCtrl
     Friend WithEvents SplitContainer1 As Windows.Forms.SplitContainer
