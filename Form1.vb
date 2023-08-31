@@ -85,7 +85,7 @@ Public Class Form1
         cbc2.MaxDropDownItems = 10
         cbc2.DropDownWidth = 200
         cbc2.Items.Add("Spreadsheet")
-        For Each obj In fsheet.SimulationObjects.Values
+        For Each obj In fsheet.SimulationObjects.Values.OrderBy(Function(o) o.GraphicObject.Tag)
             cbc2.Items.Add(obj.GraphicObject.Tag)
         Next
 
@@ -1152,7 +1152,7 @@ Public Class Form1
 
         readhandler(Me, New EventArgs, Nothing)
 
-        If btnAutoCalculate.Checked Then fsheet.RequestCalculation()
+        If btnAutoCalculate.Checked Then fsheet.RequestCalculation2(False)
 
     End Sub
 

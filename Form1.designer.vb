@@ -201,9 +201,7 @@ Partial Class Form1
         '
         'btnAutoUpdate
         '
-        Me.btnAutoUpdate.Checked = True
         Me.btnAutoUpdate.CheckOnClick = True
-        Me.btnAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked
         Me.btnAutoUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.btnAutoUpdate.Image = CType(resources.GetObject("btnAutoUpdate.Image"), System.Drawing.Image)
         Me.btnAutoUpdate.ImageTransparentColor = System.Drawing.Color.Magenta
@@ -233,9 +231,7 @@ Partial Class Form1
         '
         'btnAutoCalculate
         '
-        Me.btnAutoCalculate.Checked = True
         Me.btnAutoCalculate.CheckOnClick = True
-        Me.btnAutoCalculate.CheckState = System.Windows.Forms.CheckState.Checked
         Me.btnAutoCalculate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.btnAutoCalculate.Image = CType(resources.GetObject("btnAutoCalculate.Image"), System.Drawing.Image)
         Me.btnAutoCalculate.ImageTransparentColor = System.Drawing.Color.Magenta
@@ -256,8 +252,7 @@ Partial Class Form1
         '
         'btnAutoWrite
         '
-        Me.btnAutoWrite.Checked = True
-        Me.btnAutoWrite.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.btnAutoWrite.CheckOnClick = True
         Me.btnAutoWrite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.btnAutoWrite.Image = CType(resources.GetObject("btnAutoWrite.Image"), System.Drawing.Image)
         Me.btnAutoWrite.ImageTransparentColor = System.Drawing.Color.Magenta
